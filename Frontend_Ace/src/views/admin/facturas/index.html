@@ -1,0 +1,21 @@
+ <section class="admin__facturas">
+  <h2 class="admin__titulo">Facturas por Día</h2>
+  <input type="date" id="fecha-busqueda" class="admin__input">
+  <button id="btn-buscar" class="admin__boton">Buscar</button>
+
+  <table class="admin__tabla">
+    <thead>
+      <tr>
+        <th>ID Factura</th>
+        <th>Hora</th>
+        <th>Total</th>
+        <th>Cliente</th>
+        <th>Trabajador</th>
+        <th>Servicio</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-facturas-body"></tbody>
+  </table>
+</section>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="facturas-por-dia.js"></script>

@@ -1,0 +1,27 @@
+ <div class="admin-citas">
+      <h2>Citas del día</h2>
+      
+      <label for="fecha-admin">Fecha:</label>
+      <input type="date" id="fecha-admin">
+
+      <label for="trabajador-admin">Trabajador:</label>
+      <select id="trabajador-admin"></select>
+
+      <button id="btn-ver-citas">Ver Citas</button>
+
+      <table class="tabla-citas">
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Cliente</th>
+            <th>Servicio</th>
+             <th>Estado</th> 
+          </tr>
+        </thead>
+        <tbody id="tabla-citas-body">
+          <tr><td colspan="3">Selecciona un trabajador y fecha</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="movimientos-trabajadores.js"></script>
