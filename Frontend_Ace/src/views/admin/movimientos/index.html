@@ -1,13 +1,13 @@
- <div class="admin-citas">
-      <h2>Citas del día</h2>
+ <div class="admin__citas">
+      <h2 class="admin__titulo">Citas del día</h2>
       
-      <label for="fecha-admin">Fecha:</label>
-      <input type="date" id="fecha-admin">
+      <label for="admin__label">Fecha:</label>
+      <input class="admin__input" type="date" id="fecha-admin">
 
-      <label for="trabajador-admin">Trabajador:</label>
-      <select id="trabajador-admin"></select>
+      <label for="admin__label">Trabajador:</label>
+      <select class="admin__input" id="trabajador-admin"></select>
 
-      <button id="btn-ver-citas">Ver Citas</button>
+      <button id="admin__btn">Ver Citas</button>
 
       <table class="tabla-citas">
         <thead>
@@ -24,4 +24,3 @@
       </table>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <script src="movimientos-trabajadores.js"></script>

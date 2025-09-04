@@ -1,18 +1,16 @@
 <div class="login">
-    <form action="Agenda.html" class="login__form login__form--inicio" id="login-form">
+    <form action="Agenda.html" class="login__form login__form--inicio" id="form" novalidate autocomplete="off">
       <div class="login__container">
         <h1 class="login__title">ACE</h1>
-        <img src="../recursos/descarga (9).jpeg" alt="Logo ACE" class="login__image">
+        <!-- <img src="../recursos/descarga (9).jpeg" alt="Logo ACE" class="login__image"> -->
         <div class="login__input-group">
-          <input type="text" class="login__input" name="correo" placeholder="Correo electronico">
+          <input type="text" class="login__input" name="correo" placeholder="Correo electronico" id="correo">
         </div>
         <div class="login__input-group">
-          <input type="password" class="login__input" name="contrasena" placeholder="Contraseña">
+          <input type="password" class="login__input" name="contrasena" placeholder="Contraseña" id="contrasena">
         </div>
         <button type="submit" class="login__button login__button--hover">Siguiente</button>
-        <a href="../Registro/registro.html" class="login__link login__link--hover">Registrarse</a>
+        <a href="#/registro" class="login__link login__link--hover">Registrarse</a>
       </div>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="login.js"></script>
   </div>

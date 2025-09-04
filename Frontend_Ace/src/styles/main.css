@@ -1,0 +1,24 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --rosa-pastel: #F9B7C3;
+  --rosa-pastel-oscuro: #e7a4be;
+  --rosa-oscuro: #D94A59;
+  --rojo-vino: #A6243C;
+  --crema-claro: #FFF1EA;
+  --marron-claro: #5C3A2E;
+  --negro: #0000;
+  --blanco: #ffff; 
+  --gris: #444;
+  --rosa-marron : #8d5c54;
+}
+body{
+   margin: 0;
+  background-color: var(--blanco);
+  padding: 10px;
+}

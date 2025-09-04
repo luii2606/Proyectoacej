@@ -1,0 +1,28 @@
+/* header administradores */
+.header--admin{
+  background-color: var(--crema-claro);
+}
+.header__menu-link--admin{
+  background-color: var(--rosa-pastel-oscuro);
+  color: var(--crema-claro);
+  padding: 0.2vw 1.2vw;
+  text-align: center;
+  
+}
+.header__menu-link--admin:hover{
+  background-color: var(--rosa-pastel-oscuro);
+  color: var(--marron-claro);
+}
+.header__menu-list--admin{
+  gap: 20px;
+  
+}
+.titulo-bienvenida--admin{
+  color: var(--rosa-pastel-oscuro);
+}
+/* .admin__main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+} */

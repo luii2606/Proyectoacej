@@ -1,52 +1,87 @@
-import { routers } from "./routes.js"
-
 import { routers } from "./routes.js";
+import { isAuth } from "../helpers/auth.js";
+import Swal from "sweetalert2";
 
-export const router = async (app) => {
-  const hash = location.hash.slice(1); // Elimina el "#"
-  let arregloHash = hash.split("/");
+export const router = async (elemento) => {
+    const hash = location.hash.slice(1);
+    let arregloHash = hash.split("/");
 
-  const [ruta, parametros] = recorrerRutas(routers, arregloHash);
+    const [ruta, parametros] = recorrerRutas(routers, arregloHash);
 
-  if (!ruta) {
-    app.innerHTML = `<h2>Ruta no encontrada</h2>`;
-    return;
-  }
-
-  // Cargar la vista HTML en el contenedor
-  await cargarVista(ruta.path, app);
-
-  // Ejecutar el controller asociado a la ruta
-  if (typeof ruta.controller === "function") {
-    ruta.controller(parametros);
-  }
-};
-
-// Función para recorrer las rutas y obtener la coincidencia
-const recorrerRutas = (routes, arregloHash) => {
-  let parametros = {};
-
-  for (const key in routes) {
-    if (arregloHash.length === 1 && arregloHash[0] === "") {
-      return [routes[key], parametros];
+    if (!ruta) {
+        elemento.innerHTML = `<h2>Ruta no encontrada</h2>`;
+        return;
     }
 
-    if (key === arregloHash[0]) {
-      return [routes[key], parametros];
+    // 🔹 Validar autenticación y permisos
+    if (ruta.private) {
+        const tieneAcceso = await isAuth(ruta.permission); 
+        console.log("Permiso requerido:", ruta.permission);
+        console.log("¿Tiene acceso?:", tieneAcceso);
+        
+        if (!tieneAcceso) {
+            await Swal.fire({
+                icon: "error",
+                title: "Acceso denegado",
+                text: ruta.permission
+                    ? "No tienes permisos para entrar en esta página"
+                    : "Debes iniciar sesión para acceder a esta página",
+                confirmButtonText: "Ir al inicio"
+            });
+            location.hash = "#/login"; // 👈 tu página principal de cliente
+            return;
+        }
     }
-  }
-  return [null, parametros];
+
+    // 🔹 Cargar vista y ejecutar controlador
+    await cargarVista(ruta.path, elemento);
+    if (ruta.controller) await ruta.controller(parametros);
 };
 
-// Función para cargar la vista HTML
+const recorrerRutas = (routers, arregloHash) => {
+    let parametros = {};
+
+    // Detectar si el último segmento tiene parámetros tipo clave=valor
+    const ultimaParte = arregloHash[arregloHash.length - 1];
+    if (ultimaParte && ultimaParte.includes("=")) {
+        let parametrosSeparados = ultimaParte.split("&");
+        parametrosSeparados.forEach((parametro) => {
+            let [clave, valor] = parametro.split("=");
+            parametros[clave] = valor;
+        });
+        arregloHash.pop(); // quitamos los parámetros del array
+    }
+
+    for (const key in routers) {
+        // Ruta inicial (ej: #/)
+        if (arregloHash.length === 1 && arregloHash[0] === "") {
+            return [routers[key], parametros];
+        }
+
+        // Coincidencia con ruta
+        if (key === arregloHash[1]) {
+            for (const elemento in routers[key]) {
+                if (typeof routers[key][elemento] === "object") {
+                    return arregloHash.length === 2
+                        ? [routers[key][elemento], parametros]
+                        : [routers[key][arregloHash[2]], parametros];
+                }
+            }
+            return [routers[key], parametros];
+        }
+    }
+
+    return [null, {}];
+};
+
 const cargarVista = async (path, elemento) => {
-  try {
-    const respuesta = await fetch(`./src/views/${path}`);
-    if (!respuesta.ok) throw new Error("No pudimos leer el archivo");
-    const html = await respuesta.text();
-    elemento.innerHTML = html;
-  } catch (error) {
-    console.error("Error cargando la vista:", error);
-    elemento.innerHTML = `<h2>Error al cargar la vista</h2>`;
-  }
+    try {
+        const seccion = await fetch(`./src/views/${path}`);
+        if (!seccion.ok) throw new Error("No pudimos leer el archivo");
+        const html = await seccion.text();
+        elemento.innerHTML = html;
+    } catch (error) {
+        elemento.innerHTML = `<h2>Error cargando la vista: ${path}</h2>`;
+        console.error(error);
+    }
 };

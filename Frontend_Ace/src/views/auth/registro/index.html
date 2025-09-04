@@ -1,0 +1,23 @@
+  <div class="login">
+    <form action="login.html" class="login__form login__form--registro" id="form" novalidate autocomplete="off" >
+      <div class="login__container login__container--registro">
+        <h1 class="login__title">ACE</h1>
+        <!-- <img src="../recursos/descarga (9).jpeg" alt="Logo ACE" class="login__image"> -->
+        <div class="login__input-group">
+          <input type="text" class="login__input" name="nombre" placeholder="Nombre de usuario" id="nombre">
+        </div>
+        <div class="login__input-group">
+          <input type="number" class="login__input" name="telefono" maxlength="10" pattern="\d{10}"  placeholder="Teléfono" id="telefono">
+        </div>
+        <div class="login__input-group">
+          <input type="text" class="login__input" name="correo" placeholder="Correo" id="correo">
+        </div>
+        <div class="login__input-group">
+          <input type="password" class="login__input" name="contrasena" placeholder="Elige una Contraseña" id="contrasena">
+        </div>
+        
+        <button type="submit" class="login__button login__button" id="btnRegister">Siguiente</button>
+        <a href="#/login" class="login__link login__link--hover">Iniciar Sesion</a>
+      </div>
+    </form>
+  </div>

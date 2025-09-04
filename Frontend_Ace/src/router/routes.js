@@ -1,15 +1,31 @@
-import { trabajadoresController } from "../views/clientes/agendar-estilistas/trabajadoresController.js";
-import { loginController } from "../views/auth/Login/loginController.js";
+// import { trabajadoresController } from "../views/clientes/agendar-estilistas/trabajadoresController.js";
+import { trabajadorController } from "../controllers/trabajadoresController.js";
+import { loginController } from "../controllers/loginController.js";
+import { registroController } from "../controllers/registroController.js";
+import { agendarController } from "../views/clientes/agendar/agedarController.js";
 
 export const routers = {
-  "": {
-    path: "auth/login/index.html",
-    controller: loginController,
+   login: {
+    path: "auth/Login/index.html",
+    controller:loginController,
     private: false
   },
-  login: {
-    path: "auth/login/index.html",
-    controller: loginController,
+
+  registro: {
+    path: "auth/registro/index.html",
+    controller:registroController,
+    private: false
+  },
+
+  administrador: {
+    path: "admin/movimientos/index.html",
+    controller:trabajadorController,
+    private: false,
+    // permission: "trabajadores.view"
+  },
+  cliente: {
+    path: "clientes/agendar/index.html",
+    controller:agendarController,
     private: false
   }
 }

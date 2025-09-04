@@ -1,0 +1,128 @@
+.admin__main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;   /* centra horizontalmente */
+  gap: 40px;             /* separación entre formulario y tabla */
+  margin: 30px auto;
+  width: 100%;
+  max-width: 1000px;     /* ancho máximo alineado con el header */
+  padding: 0 20px;
+}
+
+/* Sección formulario */
+.admin__section--trabajadores {
+  background-color: var(--blanco);
+  border: 1px solid var(--rosa-pastel);
+  border-radius: 12px;
+  padding: 20px;
+  width: 100%;
+  max-width: 400px;       /* controlamos el tamaño del form */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+.form {
+  display: grid; 
+  gap: 15px;
+}
+
+.form__group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.form__input {
+  padding: 8px 12px;
+  border: 1px solid var(--marron-claro);
+  border-radius: 8px;
+  background-color: var(--crema-claro);
+}
+
+.form__button {
+  padding: 10px;
+  background-color: var(--marron-claro);
+  color: var(--blanco);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.form__button:hover {
+  background-color: var(--rosa-marron); 
+}
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+  padding: 6vw;
+}
+.login__container {
+  background-color: var(--rosa-pastel-oscuro);
+  border-radius: 30px;
+  width: 300px;
+  max-width: 300px;
+  padding: 60px 70px;
+  text-align: center;
+}
+
+.login__container--registro {
+  height: 420px;
+  width: 500px;
+  padding: 20px 70px;
+}
+
+.login__title {
+  color: var(--crema-claro);
+  font-size: 2.5rem;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.login__input-group {
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.login__input,.input__agendar {
+  width: 100%;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--crema-claro);
+  /* font-size: 1rem; */
+  outline: none;
+  color: var(--marron-claro);
+}
+
+.login__input::placeholder {
+  color: var(--marron-claro);
+  opacity: 0.7;
+}
+.login__button,.btn__agendar {
+  background-color: var(--marron-claro);
+  color: var(--rosa-pastel-oscuro);
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  /* font-size: 1rem; */
+  cursor: pointer;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+  width: 100%;
+  font-weight: bold;
+}
+.login__link {
+  display: block;
+  margin-top: 15px;
+  color: var(--crema-claro);
+  font-size: 0.9rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
