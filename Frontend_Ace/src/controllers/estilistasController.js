@@ -1,0 +1,57 @@
+import * as solicitudes from "../helpers/solicitudes.js";
+import { error } from "../helpers/alertas.js";
+
+export const estilistasController = async () => {
+  const contenedor = document.querySelector("#estilistas-contenedor");
+
+  // 🔹 Renderizar trabajadores
+  const cargarTrabajadores = async () => {
+    try {
+      // Llamada al endpoint que devuelve los trabajadores
+      const trabajadores = await solicitudes.get("usuarios/trabajadores");
+      console.log(trabajadores);
+
+
+
+      // Limpiar contenedor
+      contenedor.innerHTML = "";
+
+      // Recorrer y renderizar cada trabajador
+      trabajadores.forEach(t => { 
+        const tarjeta = document.createElement("a");
+        tarjeta.href = "#agendar";
+        tarjeta.className = "estilista estilista--hover";
+
+        const nombreUsuario = t.nombre || "";
+        const nombreRol = t.nombreRol || "";
+        const telefono = t.telefono || "";
+
+        tarjeta.innerHTML = `
+          <img src="../helpers/Images/Tony Chopper.jpeg" alt="foto" class="estilista__foto" />
+          <div class="estilista__info">
+            <div class="estilista__nombre">${nombreUsuario}</div>
+            <div class="estilista__descripcion">${nombreRol}</div>
+            <div class="estilista__telefono">Tel.: ${telefono}</div>
+          </div>
+        `;
+          tarjeta.addEventListener("click", () => {
+          // Guardamos el trabajador seleccionado en sessionStorage o localStorage
+          sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(t));
+          // Redirigir a la ruta usando router
+          window.location.href = "#agendar"; // ejemplo de hash
+        });
+
+        contenedor.appendChild(tarjeta);
+      });
+
+    } catch (err) {
+      console.error("Error cargando trabajadores:", err);
+      error("No se pudieron cargar los trabajadores.");
+    }
+  };
+
+  // 🔹 Inicializar
+  await cargarTrabajadores();
+};
+
+

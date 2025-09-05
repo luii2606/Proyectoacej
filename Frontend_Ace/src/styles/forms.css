@@ -1,27 +1,29 @@
 .admin__main {
   display: flex;
   flex-direction: column;
-  align-items: center;   /* centra horizontalmente */
+  /* align-items: center;   centra horizontalmente */
   gap: 40px;             /* separación entre formulario y tabla */
   margin: 30px auto;
   width: 100%;
-  max-width: 1000px;     /* ancho máximo alineado con el header */
-  padding: 0 20px;
+  max-width: 1200px;     /* ancho máximo alineado con el header */
+  padding: 0 9px;
 }
 
 /* Sección formulario */
 .admin__section--trabajadores {
+ margin: 0 auto; /* Esto lo centra horizontalmente */
   background-color: var(--blanco);
   border: 1px solid var(--rosa-pastel);
   border-radius: 12px;
-  padding: 20px;
+  padding: 30px;
   width: 100%;
-  max-width: 400px;       /* controlamos el tamaño del form */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  max-width: 400px; 
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);;
 }
-.form {
+.form--trabajador {
   display: grid; 
   gap: 15px;
+
 }
 
 .form__group {
@@ -53,6 +55,74 @@
 
 .form__button:hover {
   background-color: var(--rosa-marron); 
+}
+/* formulario sección clientes */
+.cliente__main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.cliente__cuadro {
+  background-color: var(--blanco);
+  border: 1px solid var(--rosa-pastel);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  margin: 20px;
+}
+.cliente__cuadro--admin{
+   background-color: var(--blanco);
+  border: 1px solid var(--rosa-pastel);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  margin: 0 auto;
+  margin-top: 25px;
+}
+
+.cuadro__titulo {
+  font-size: 1.4rem;
+  color: var(--rojo-vino);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--rojo-vino);
+  display: inline-block;
+  padding-bottom: 4px;
+}
+
+.formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.formulario__label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  color: #4e3e3e;
+}
+
+.formulario__input {
+  padding: 10px;
+  border: 1px solid var(--rosa-pastel);
+  border-radius: 10px;
+  margin-top: 5px;
+}
+
+.formulario__boton {
+  background-color: var(--marron-claro);
+  color: var(--blanco);
+  border: none;
+  padding: 12px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: bold;
 }
 .login {
   display: flex;

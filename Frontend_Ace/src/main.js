@@ -17,3 +17,4 @@ window.addEventListener("DOMContentLoaded", () => {
 window.addEventListener("hashchange", () => {
   router(app);
 });
+

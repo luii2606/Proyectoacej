@@ -2,7 +2,8 @@
 import { trabajadorController } from "../controllers/trabajadoresController.js";
 import { loginController } from "../controllers/loginController.js";
 import { registroController } from "../controllers/registroController.js";
-import { agendarController } from "../views/clientes/agendar/agedarController.js";
+import { agendarController } from "../controllers/agendarController.js";
+import { estilistasController } from "../controllers/estilistasController.js";
 
 export const routers = {
    login: {
@@ -18,14 +19,19 @@ export const routers = {
   },
 
   administrador: {
-    path: "admin/movimientos/index.html",
+    path: "admin/trabajadores/index.html",
     controller:trabajadorController,
     private: false,
     // permission: "trabajadores.view"
   },
   cliente: {
-    path: "clientes/agendar/index.html",
-    controller:agendarController,
+    path: "clientes/agendar-estilistas/index.html",
+    controller:estilistasController,
+    private: false
+  },
+  agendar: {
+    path: "clientes/agendar/index.html", // tu nueva vista
+    controller:agendarController, // controlador de esa vista
     private: false
   }
 }

@@ -11,7 +11,7 @@ export const trabajadorController = async () => {
   const idInput = document.createElement("input");
   idInput.type = "hidden";
   idInput.id = "id-trabajador";
-  form.appendChild(idInput);
+  form.appendChild(idInput);  
 
   // Campos del formulario
   const nombre = document.getElementById("usuario-trabajador");
@@ -104,6 +104,7 @@ export const trabajadorController = async () => {
  const cargarTrabajadores = async () => {
   try {
     const trabajadores = await solicitudes.get("usuarios");
+    console.log(trabajadores)
     tablaBody.innerHTML = "";
 
     trabajadores
@@ -113,10 +114,10 @@ export const trabajadorController = async () => {
 
         // Tomar el nombre desde 'usuario' o 'nombre'
         const nombreUsuario = t.usuario || t.nombre || "";
-        // Tomar el rol desde 'rol' o 'nombre_rol'
-        const nombreRol = t.rol || t.nombre_rol || "Trabajador";
-        // Tomar el estado desde 'estado' o 'nombre_estado'
-        const nombreEstado = t.estado || t.nombre_estado || "";
+  
+        const nombreRol = t.nombreRol || t.nombre_rol || t.rol || "";
+      
+        const nombreEstado = t.estado || t.nombreEstado || "";
 
         tr.innerHTML = `
           <td class="admin__tabla-cuerpo">${t.id}</td>
@@ -126,7 +127,6 @@ export const trabajadorController = async () => {
           <td class="admin__tabla-cuerpo">${nombreRol}</td>
           <td class="admin__tabla-cuerpo">${nombreEstado}</td>
           <td class="admin__tabla-cuerpo">
-            <button data-id="${t.id}" class="tabla__boton tabla__boton--editar">Editar</button>
             <button data-id="${t.id}" class="tabla__boton tabla__boton--eliminar">Eliminar</button>
           </td>
         `;
@@ -160,6 +160,7 @@ export const trabajadorController = async () => {
 
         try {
           const resp = await solicitudes.delet(`usuarios/${btn.dataset.id}`);
+          console.log("Eliminar id:", btn.dataset.id);
           await success(resp.mensaje || "Trabajador eliminado");
           await cargarTrabajadores();
         } catch (err) {

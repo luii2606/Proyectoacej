@@ -1,0 +1,63 @@
+/* ------Bloque Estilistas----- */
+.estilistas__bloque{
+  margin: 30px;
+  padding: 1rem 1.9rem;
+}
+
+.estilista {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: var(--rosa-pastel);
+  border-left: 4px solid var(--rojo-vino);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 30px;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.estilista--hover:hover {
+  background-color: var(--crema-claro);
+  transform: translateX(5px);
+}
+
+/* Elemento foto */
+.estilista__foto {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--rojo-vino);
+}
+
+/* Contenedor de información */
+.estilista__info {
+  flex: 1;
+}
+
+.estilista__nombre {
+  font-weight: bold;
+  color: var(--marron);
+  font-size: 1.2em;
+  margin-bottom: 5px;
+}
+
+.estilista__descripcion {
+  color: var(--marron-claro);
+  margin-bottom: 5px;
+}
+
+.estilista__telefono {
+  font-family: 'Courier New', monospace;
+  background-color:var(--crema-claro);
+  padding: 5px 10px;
+  border-radius: 3px;
+  display: inline-block;
+  color: var(--rojo-vino);
+}
+.estilista--leter{
+  border-radius: 0%;
+  border-left: none;
+  text-align: center;
+}

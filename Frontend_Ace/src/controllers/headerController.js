@@ -41,13 +41,4 @@ function attachLogout(container) {
     });
   }
 }
-function attachMovi(container) {
-  const btn = container.querySelector("#movimientos-btn"); 
-  if (btn) {
-    btn.addEventListener("click", () => {
-      logout();
-      headerController(container); // refresca al header de inicio
-      window.location.hash = "#/movimientos"; // redirige a login
-    });
-  }
-}
+

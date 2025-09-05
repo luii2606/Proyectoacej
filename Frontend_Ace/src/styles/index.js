@@ -7,3 +7,4 @@ import './forms.css';
 import './admin.css';
 import './helpers.css';
 import './table.css';
+import './clientes.css';

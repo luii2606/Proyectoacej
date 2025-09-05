@@ -1,18 +1,19 @@
  <section class="admin__facturas">
   <h2 class="admin__titulo">Facturas por Día</h2>
-  <input type="date" id="fecha-busqueda" class="admin__input">
-  <button id="btn-buscar" class="admin__boton">Buscar</button>
-
+  <div class="admin__content">
+    <input type="date" id="fecha-busqueda" class="admin__input">
+    <button id="btn-buscar" class="admin__boton">Buscar</button>
+  </div>
   <table class="admin__tabla">
     <thead>
-      <tr>
-        <th>ID Factura</th>
-        <th>Hora</th>
-        <th>Total</th>
-        <th>Cliente</th>
-        <th>Trabajador</th>
-        <th>Servicio</th>
-      </tr>
+      <tr class="admin__tabla-fila">
+        <th class="admin__tabla-encabezado">ID Factura</th>
+        <th class="admin__tabla-encabezado">Hora</th>
+        <th class="admin__tabla-encabezado">Total</th>
+        <th class="admin__tabla-encabezado">Cliente</th>
+        <th class="admin__tabla-encabezado">Trabajador</th>
+        <th class="admin__tabla-encabezado">Servicio</th>
+      </tr class="admin__tabla-fila">
     </thead>
     <tbody id="tabla-facturas-body"></tbody>
   </table>

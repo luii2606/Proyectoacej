@@ -85,7 +85,7 @@ export const put = async (datos, endpoint) => {
 export const delet = async (endpoint) => {
   const res = await fetch(`${url}/${endpoint}`, {
     method: "DELETE",
-    // credentials: "include",
+     //credentials: "include",
     headers: {
       ...getAuthHeaders(),
     },
