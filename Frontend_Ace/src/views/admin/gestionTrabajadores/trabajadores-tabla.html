@@ -1,0 +1,29 @@
+<!-- <tbody class="admin__tabla-cuerpo" id="tbody-trabajadores"></tbody> -->
+
+<main class="admin__main">
+  <section class="admin__seccion admin__seccion--lista">
+    <h2 class="admin__seccion-titulo">Trabajadores Registrados</h2>
+    <table class="admin__tabla" id="tabla-trabajadores">
+      <thead class="admin__tabla-cabecera">
+        <tr class="admin__tabla-fila">
+          <th class="admin__tabla-encabezado">ID</th>
+          <th class="admin__tabla-encabezado">Usuario</th>
+          <th class="admin__tabla-encabezado">Correo</th>
+          <th class="admin__tabla-encabezado">Teléfono</th>
+          <th class="admin__tabla-encabezado">Rol</th>
+          <th class="admin__tabla-encabezado">Estado</th>
+          <th class="admin__tabla-encabezado">Acciones</th>
+        </tr>
+      </thead>
+      <tbody class="admin__tabla-cuerpo" id="tbody-trabajadores"></tbody>
+    </table>
+    <a href="#/adminTrabajadores" class="link__volver">← Volver al registro</a>
+  </section>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script type="module">
+  import { trabajadorController } from "./controllers/trabajadorController.js";
+  trabajadorController(); // Solo carga la tabla aquí
+</script>
+

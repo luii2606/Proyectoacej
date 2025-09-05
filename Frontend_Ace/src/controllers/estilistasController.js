@@ -19,7 +19,7 @@ export const estilistasController = async () => {
       // Recorrer y renderizar cada trabajador
       trabajadores.forEach(t => { 
         const tarjeta = document.createElement("a");
-        tarjeta.href = "#agendar";
+        tarjeta.href = "#/agendar";
         tarjeta.className = "estilista estilista--hover";
 
         const nombreUsuario = t.nombre || "";
@@ -34,12 +34,23 @@ export const estilistasController = async () => {
             <div class="estilista__telefono">Tel.: ${telefono}</div>
           </div>
         `;
-          tarjeta.addEventListener("click", () => {
-          // Guardamos el trabajador seleccionado en sessionStorage o localStorage
-          sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(t));
-          // Redirigir a la ruta usando router
-          window.location.href = "#agendar"; // ejemplo de hash
-        });
+       tarjeta.addEventListener("click", async () => {
+  try {
+    // Hacemos petición al backend con el id del trabajador
+    const trabajadorDetalle = await solicitudes.get(`usuarios/${t.id}`);
+
+    console.log("Detalle trabajador:", trabajadorDetalle);
+
+    // Guardamos el trabajador con su id_roles
+    sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(trabajadorDetalle));
+
+    window.location.hash = "#/agendar";
+  } catch (err) {
+    console.error("Error obteniendo detalle del trabajador:", err);
+    error("No se pudo obtener el rol del trabajador");
+  }
+});
+
 
         contenedor.appendChild(tarjeta);
       });

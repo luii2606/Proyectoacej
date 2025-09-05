@@ -30,7 +30,7 @@ export function headerController(container) {
   }
 }
 
-// 🔥 función que engancha el logout al botón del header
+//  función que engancha el logout al botón del header
 function attachLogout(container) {
   const btn = container.querySelector("#logout-btn"); 
   if (btn) {

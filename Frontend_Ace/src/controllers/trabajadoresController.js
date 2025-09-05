@@ -7,11 +7,14 @@ export const trabajadorController = async () => {
   const form = document.getElementById("form");
   const btnGuardar = document.getElementById("btn-guardar");
 
-  // Campo oculto para ID
-  const idInput = document.createElement("input");
-  idInput.type = "hidden";
-  idInput.id = "id-trabajador";
-  form.appendChild(idInput);  
+  // Campo oculto para ID (solo si existe form)
+  let idInput = null;
+  if (form) {
+    idInput = document.createElement("input");
+    idInput.type = "hidden";
+    idInput.id = "id-trabajador";
+    form.appendChild(idInput);
+  }
 
   // Campos del formulario
   const nombre = document.getElementById("usuario-trabajador");
@@ -23,6 +26,7 @@ export const trabajadorController = async () => {
 
   // 🔹 Cargar roles
   const cargarRoles = async () => {
+    if (!rolSelect) return; // no hay select en la vista de tabla
     rolSelect.innerHTML = `<option value="">Seleccione un rol</option>`;
     try {
       const roles = await solicitudes.get("roles");
@@ -39,6 +43,7 @@ export const trabajadorController = async () => {
 
   // 🔹 Cargar estados
   const cargarEstados = async () => {
+    if (!estadoSelect) return;
     estadoSelect.innerHTML = `<option value="">Seleccione un estado</option>`;
     try {
       const estados = await solicitudes.get("estado_usuarios");
@@ -53,14 +58,67 @@ export const trabajadorController = async () => {
     }
   };
 
-  // 🔹 Listener único
-  if (form.dataset.inited !== "true") {
+  // 🔹 Cargar tabla de trabajadores
+  const cargarTrabajadores = async () => {
+    if (!tablaBody) return;
+    try {
+      const trabajadores = await solicitudes.get("usuarios");
+      //console.log(trabajadores);
+      tablaBody.innerHTML = "";
+
+      trabajadores
+        .filter((t) => t.id_tipo_usuario === 3) // solo trabajadores
+        .forEach((t) => {
+          const tr = document.createElement("tr");
+
+          const nombreUsuario = t.usuario || t.nombre || "";
+          const nombreRol = t.nombreRol || t.nombre_rol || t.rol || "";
+          const nombreEstado = t.estado || t.nombreEstado || "";
+
+          tr.innerHTML = `
+            <td class="admin__tabla-cuerpo">${t.id}</td>
+            <td class="admin__tabla-cuerpo">${nombreUsuario}</td>
+            <td class="admin__tabla-cuerpo">${t.correo || ""}</td>
+            <td class="admin__tabla-cuerpo">${t.telefono || ""}</td>
+            <td class="admin__tabla-cuerpo">${nombreRol}</td>
+            <td class="admin__tabla-cuerpo">${nombreEstado}</td>
+            <td class="admin__tabla-cuerpo">
+              <button data-id="${t.id}" class="tabla__boton tabla__boton--eliminar">Eliminar</button>
+            </td>
+          `;
+          tablaBody.appendChild(tr);
+        });
+
+      // Eliminar
+      tablaBody.querySelectorAll(".tabla__boton--eliminar").forEach((btn) => {
+        btn.addEventListener("click", async () => {
+          const confirmacion = await confirm("¿Deseas eliminar este trabajador?");
+          if (!confirmacion.isConfirmed) return;
+
+          try {
+            const resp = await solicitudes.delet(`usuarios/${btn.dataset.id}`);
+            console.log("Eliminar id:", btn.dataset.id);
+            await success(resp.mensaje || "Trabajador eliminado");
+            await cargarTrabajadores();
+          } catch (err) {
+            console.error(err);
+            error("No se pudo eliminar el trabajador.");
+          }
+        });
+      });
+    } catch (err) {
+      console.error(err);
+      error("No se pudieron cargar los trabajadores.");
+    }
+  };
+
+  // 🔹 Listeners solo si existe formulario
+  if (form && form.dataset.inited !== "true") {
     form.dataset.inited = "true";
 
     if (nombre) nombre.addEventListener("keydown", (e) => validaciones.validarTexto(e));
     if (telefono) telefono.addEventListener("keydown", (e) => validaciones.validarNumero(e));
 
-    // Guardar
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       if (!validaciones.validarCampos(e)) return;
@@ -70,9 +128,9 @@ export const trabajadorController = async () => {
         correo: correo.value.trim(),
         telefono: telefono.value.trim(),
         contrasena: contrasena.value,
-        id_tipo_usuario: 3, // fijo: trabajador
-        id_roles: rolSelect.value || null,
-        id_estado_usuarios: estadoSelect.value || 1
+        id_tipo_usuario: 3,
+        id_roles: rolSelect?.value || null,
+        id_estado_usuarios: estadoSelect?.value || 1,
       };
 
       try {
@@ -100,84 +158,8 @@ export const trabajadorController = async () => {
     });
   }
 
-  // 🔹 Cargar tabla de trabajadores
- const cargarTrabajadores = async () => {
-  try {
-    const trabajadores = await solicitudes.get("usuarios");
-    console.log(trabajadores)
-    tablaBody.innerHTML = "";
-
-    trabajadores
-      .filter(t => t.id_tipo_usuario === 3) // solo trabajadores
-      .forEach(t => {
-        const tr = document.createElement("tr");
-
-        // Tomar el nombre desde 'usuario' o 'nombre'
-        const nombreUsuario = t.usuario || t.nombre || "";
-  
-        const nombreRol = t.nombreRol || t.nombre_rol || t.rol || "";
-      
-        const nombreEstado = t.estado || t.nombreEstado || "";
-
-        tr.innerHTML = `
-          <td class="admin__tabla-cuerpo">${t.id}</td>
-          <td class="admin__tabla-cuerpo">${nombreUsuario}</td>
-          <td class="admin__tabla-cuerpo">${t.correo || ""}</td>
-          <td class="admin__tabla-cuerpo">${t.telefono || ""}</td>
-          <td class="admin__tabla-cuerpo">${nombreRol}</td>
-          <td class="admin__tabla-cuerpo">${nombreEstado}</td>
-          <td class="admin__tabla-cuerpo">
-            <button data-id="${t.id}" class="tabla__boton tabla__boton--eliminar">Eliminar</button>
-          </td>
-        `;
-        tablaBody.appendChild(tr);
-      });
-
-    // Editar (usar las clases correctas)
-    tablaBody.querySelectorAll(".tabla__boton--editar").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const t = await solicitudes.get(`usuarios/${btn.dataset.id}`);
-
-        // Igual que arriba: tomar los nombres con fallback
-        const nombreUsuario = t.usuario || t.nombre || "";
-
-        idInput.value = t.id;
-        nombre.value = nombreUsuario;
-        correo.value = t.correo || "";
-        telefono.value = t.telefono || "";
-        contrasena.value = t.contrasena || "";
-        // Respetar los nombres exactos del backend
-        rolSelect.value = t.id_roles || "";
-        estadoSelect.value = t.estado || t.id_Estado_usuarios || t.id_estado_usuarios || "";
-      });
-    });
-
-    // Eliminar (usar las clases correctas)
-    tablaBody.querySelectorAll(".tabla__boton--eliminar").forEach(btn => {
-      btn.addEventListener("click", async () => {
-        const confirmacion = await confirm("¿Deseas eliminar este trabajador?");
-        if (!confirmacion.isConfirmed) return;
-
-        try {
-          const resp = await solicitudes.delet(`usuarios/${btn.dataset.id}`);
-          console.log("Eliminar id:", btn.dataset.id);
-          await success(resp.mensaje || "Trabajador eliminado");
-          await cargarTrabajadores();
-        } catch (err) {
-          console.error(err);
-          error("No se pudo eliminar el trabajador.");
-        }
-      });
-    });
-  } catch (err) {
-    console.error(err);
-    error("No se pudieron cargar los trabajadores.");
-  }
-};
-
-  // 🔹 Inicializar
+  // 🔹 Inicializar según la vista
   await cargarRoles();
   await cargarEstados();
   await cargarTrabajadores();
 };
-

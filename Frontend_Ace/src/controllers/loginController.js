@@ -28,14 +28,14 @@ export function loginController() {
         return;
       }
 
-if (response.access_token) {
-    let confirmacion = await success("Login exitoso");
-    if (confirmacion.isConfirmed) {
-        // Guardar tokens en localStorage
-        localStorage.setItem("access_token", response.access_token);
-        localStorage.setItem("refresh_token", response.refresh_token);
-        localStorage.setItem("id_tipo_usuario", response.id_tipo_usuario); // Guardamos el tipo del usuario también
-        console.log(response.id_tipo_usuario);
+    if (response.access_token) {
+        let confirmacion = await success("Login exitoso");
+        if (confirmacion.isConfirmed) {
+            // Guardar tokens en localStorage
+            localStorage.setItem("access_token", response.access_token);
+            localStorage.setItem("refresh_token", response.refresh_token);
+            localStorage.setItem("id_tipo_usuario", response.id_tipo_usuario); // Guardamos el tipo del usuario también
+            console.log(response.id_tipo_usuario);
         
 
         const tipo_usuario = Number(response.id_tipo_usuario);
@@ -43,7 +43,7 @@ if (response.access_token) {
         // Redirección según tipo_usuario
     switch (tipo_usuario) {
     case 1: // Admin
-        window.location.href = '#/administrador';
+        window.location.href = '#/adminTrabajadores';
         break;
     case 2: // Usuario normal
         window.location.href = '#/cliente';

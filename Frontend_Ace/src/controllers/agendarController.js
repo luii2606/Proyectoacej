@@ -2,13 +2,15 @@ import * as solicitudes from "../helpers/solicitudes.js";
 import { error } from "../helpers/alertas.js";
 
 export const agendarController = async () => {
+  // Recuperamos el trabajador seleccionado
   const trabajador = JSON.parse(sessionStorage.getItem("trabajadorSeleccionado"));
 
   if (!trabajador) {
-    window.location.hash = "#cliente";
+    window.location.hash = "#/cliente";
     return;
   }
 
+  // Cargamos los datos básicos del trabajador
   document.querySelector("#id-trabajador").value = trabajador.id || "";
   document.querySelector("#campo-estilista").value = trabajador.nombre || "";
   const titulo = document.querySelector(".cuadro__titulo");
@@ -16,8 +18,15 @@ export const agendarController = async () => {
 
   // 🔹 Cargar servicios según rol del estilista
   const selectServicio = document.querySelector("#select-servicio");
+  console.log("Rol del trabajador:", trabajador.id_roles);
+
   try {
-    const servicios = await solicitudes.get(`servicios?rol=${trabajador.id_roles}`);
+    // usamos el id_roles del trabajador directamente
+    const servicios = await solicitudes.get(`servicios/rol/${trabajador.id_roles}`);
+
+    // limpiar opciones previas
+    selectServicio.innerHTML = `<option value="">Selecciona un servicio...</option>`;
+
     servicios.forEach(s => {
       const option = document.createElement("option");
       option.value = s.id;
@@ -33,6 +42,10 @@ export const agendarController = async () => {
   const selectModalidad = document.querySelector("#modalidad");
   try {
     const modalidades = await solicitudes.get("modalidades");
+
+    // limpiar opciones previas
+    selectModalidad.innerHTML = `<option value="">Selecciona una modalidad...</option>`;
+
     modalidades.forEach(m => {
       const option = document.createElement("option");
       option.value = m.id;
@@ -85,6 +98,7 @@ export const agendarController = async () => {
     console.log({
       trabajadorId: trabajador.id,
       trabajadorNombre: trabajador.nombre,
+      rolId: trabajador.id_roles, // 🔹 también enviamos el rol
       fecha,
       hora,
       servicio,
@@ -92,7 +106,4 @@ export const agendarController = async () => {
     });
   });
 };
-
-
-
  

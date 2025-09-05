@@ -1,0 +1,35 @@
+<main class="admin__main">
+  <section class="admin__section admin__section--trabajadores">
+    <h2 class="admin__section-title">Registrar Trabajador</h2>
+    <form class="form form--trabajador" id="form">
+      <div class="form__group">
+        <label class="form__label" for="usuario-trabajador">Usuario:</label>
+        <input class="form__input" type="text" id="usuario-trabajador" />
+      </div>
+      <div class="form__group">
+        <label class="form__label" for="correo-trabajador">Correo:</label>
+        <input class="form__input" type="text" id="correo-trabajador" />
+      </div>
+      <div class="form__group">
+        <label class="form__label" for="telefono-trabajador">Teléfono:</label>
+        <input class="form__input" type="number" id="telefono-trabajador" />
+      </div>
+      <label class="form__label" for="rol-trabajador">Rol:</label>
+      <select class="form__input" id="rol-trabajador">
+        <option value="">Seleccione un rol</option>
+      </select>
+      <label class="form__label" for="estado-trabajador">Estado:</label>
+      <select class="form__input" id="estado-trabajador">
+        <option value="">Seleccione un estado</option>
+      </select>
+      <div class="form__group">
+        <label class="form__label" for="contrasena-trabajador">Contraseña:</label>
+        <input class="form__input" type="password" id="contrasena-trabajador" />
+      </div>
+      <button id="btn-guardar" class="form__button" type="submit">
+        Registrar Trabajador
+      </button>
+    </form>
+    <a href="#/tablaTrabajadores" class="link__tabla">Ver lista de trabajadores</a>
+  </section>
+</main>

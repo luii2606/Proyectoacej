@@ -17,21 +17,25 @@ export const routers = {
     controller:registroController,
     private: false
   },
-
-  administrador: {
-    path: "admin/trabajadores/index.html",
-    controller:trabajadorController,
-    private: false,
-    // permission: "trabajadores.view"
-  },
   cliente: {
     path: "clientes/agendar-estilistas/index.html",
     controller:estilistasController,
     private: false
   },
+
   agendar: {
     path: "clientes/agendar/index.html", // tu nueva vista
     controller:agendarController, // controlador de esa vista
+    private: false
+  },
+  adminTrabajadores: {
+    path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
+    controller:trabajadorController, // controlador de esa vista
+    private: false
+  },
+  tablaTrabajadores: {
+    path: "admin/gestionTrabajadores/trabajadores-tabla.html", // tu nueva vista
+    controller:trabajadorController, // controlador de esa vista
     private: false
   }
 }
