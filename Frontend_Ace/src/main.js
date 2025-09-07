@@ -5,6 +5,7 @@ import { headerController } from './controllers/headerController.js';
 const header = document.querySelector("#header");
 const app = document.querySelector("#app");
 
+
 // Ejecuta el router en la carga inicial
 window.addEventListener("DOMContentLoaded", () => {
   

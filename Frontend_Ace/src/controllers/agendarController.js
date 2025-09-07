@@ -2,16 +2,23 @@ import * as solicitudes from "../helpers/solicitudes.js";
 import { error } from "../helpers/alertas.js";
 
 export const agendarController = async () => {
-  // Recuperamos el trabajador seleccionado
+  // 🔹 Recuperamos el trabajador seleccionado
   const trabajador = JSON.parse(sessionStorage.getItem("trabajadorSeleccionado"));
   const cliente = JSON.parse(sessionStorage.getItem("usuarioLogueado")); // 👈 cliente logueado
+  const clientee = localStorage.getItem("id_usuario");
+  
+  
+
+  console.log("Trabajador en sessionStorage:", trabajador);
+  console.log("Cliente en sessionStorage:", cliente);
+
 
   if (!trabajador) {
     window.location.hash = "#/cliente";
     return;
   }
 
-  // Cargamos los datos básicos del trabajador
+  // 🔹 Cargamos los datos básicos del trabajador en el formulario
   document.querySelector("#id-trabajador").value = trabajador.id || "";
   document.querySelector("#campo-estilista").value = trabajador.nombre || "";
   const titulo = document.querySelector(".cuadro__titulo");
@@ -33,7 +40,7 @@ export const agendarController = async () => {
     error("No se pudieron cargar los servicios");
   }
 
-  // 🔹 Modalidades
+  // 🔹 Cargar modalidades
   const selectModalidad = document.querySelector("#modalidad");
   try {
     const modalidades = await solicitudes.get("modalidades");
@@ -74,6 +81,12 @@ export const agendarController = async () => {
   const form = document.querySelector(".formulario");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
+
+    if (!trabajador || !cliente) {
+      error("Faltan datos del trabajador o del cliente");
+      return;
+    }
+
     const hora = selectHora.value;
     const servicio = selectServicio.value;
     const modalidad = selectModalidad.value;
@@ -84,17 +97,19 @@ export const agendarController = async () => {
       return;
     }
 
-    // 👇 Objeto que se enviará al backend
-    const nuevaOrden = {
-        id_trabajador: trabajador.id,       // 👈 el backend espera este nombre
-        id_usuario: 1,                      // 👈 aquí deberías poner el id del cliente logueado (ej: sessionStorage.getItem("usuarioId"))
-        fecha: fecha,
-        hora: hora,
-        id_modalidad: parseInt(modalidad),
-        id_servicio: parseInt(servicio),
-        id_estado: 1 
+    console.log(trabajador.id);
+    console.log(servicio);
+    console.log(modalidad);
     
-      };
+    // 👇 Objeto final que se enviará al backend
+    const nuevaOrden = {
+      id_trabajador: trabajador.id, // id_usuario del trabajador
+      id_usuario: clientee,       // id_usuario del cliente
+      id_servicio: servicio,
+      id_modalidad: modalidad,
+      fecha,
+      hora
+    };
 
     try {
       const respuesta = await solicitudes.post("ordenes", nuevaOrden);
@@ -106,6 +121,8 @@ export const agendarController = async () => {
     }
   });
 };
+
+
 
 
  

@@ -28,38 +28,54 @@ export function loginController() {
         return;
       }
 
-    if (response.access_token) {
+      if (response.access_token) {
         let confirmacion = await success("Login exitoso");
         if (confirmacion.isConfirmed) {
-            // Guardar tokens en localStorage
-            localStorage.setItem("access_token", response.access_token);
-            localStorage.setItem("refresh_token", response.refresh_token);
-            localStorage.setItem("id_tipo_usuario", response.id_tipo_usuario); // Guardamos el tipo del usuario también
-            console.log(response.id_tipo_usuario);
-        
+          // Guardar tokens en localStorage
+          console.log(response.id_usuario);
+          localStorage.setItem("id_usuario", response.id_usuario);
+          
+          localStorage.setItem("access_token", response.access_token);
+          // localStorage.setItem("", response.access_token);
+          localStorage.setItem("refresh_token", response.refresh_token);
+          localStorage.setItem("id_tipo_usuario", response.id_tipo_usuario);
 
-        const tipo_usuario = Number(response.id_tipo_usuario);
-        
-        // Redirección según tipo_usuario
-    switch (tipo_usuario) {
-    case 1: // Admin
-        window.location.href = '#/adminTrabajadores';
-        break;
-    case 2: // Usuario normal
-        window.location.href = '#/cliente';
-        break;
-    case 3: // trabajador
-        window.location.href = '#/trabajadores';
-        break;
-    default:
-        window.location.href = '#/login'; // Fallback
-  }
 
-    }
-} else {
-    error("Respuesta inesperada del servidor");
-}
+          console.log("Tipo de usuario:", response.id_tipo_usuario);
 
+          // 🔹 Guardar también al usuario en sessionStorage
+          const usuario = {
+            id: response.id,
+            nombre: response.nombre,
+            correo: response.correo,
+            id_roles: response.id_roles,
+            id_tipo_usuario: response.id_tipo_usuario
+          };
+          
+          
+          
+          sessionStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
+
+          const tipo_usuario = Number(response.id_tipo_usuario);
+
+          // Redirección según tipo_usuario
+          switch (tipo_usuario) {
+            case 1: // Admin
+              window.location.href = '#/adminTrabajadores';
+              break;
+            case 2: // Usuario normal (cliente)
+              window.location.href = '#/cliente';
+              break;
+            case 3: // Trabajador
+              window.location.href = '#/trabajadores';
+              break;
+            default:
+              window.location.href = '#/login'; // Fallback
+          }
+        }
+      } else {
+        error("Respuesta inesperada del servidor");
+      }
 
     } catch (err) {
       console.error("❌ Error en login:", err);

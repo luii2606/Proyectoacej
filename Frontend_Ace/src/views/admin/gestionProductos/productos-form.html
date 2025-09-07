@@ -1,0 +1,23 @@
+<main class="admin__main">
+  <section class="admin__section admin__section--trabajadores">
+    <h2 class="admin__section-title">Registrar Productos</h2>
+    <form class="form form--trabajador" id="form">
+      <div class="form__group">
+        <label class="form__label" for="nombre-producto">Nombre del producto:</label>
+        <input class="form__input" type="text" id="nombre-producto" />
+      </div>
+      <div class="form__group">
+        <label class="form__label" for="descripcion-producto">Descripción:</label>
+        <textarea id="descripcion" class="form__input" rows="4" cols="40" id="descripcion-producto" placeholder="Escribe una breve descripción del producto aquí..."></textarea>
+      </div>
+      <div class="form__group">
+        <label class="form__label" for="precio-producto">Precio:</label>
+        <input class="form__input" type="text" id="precio-producto" />
+      </div>
+      <button id="btn-guardar" class="form__button" type="submit">
+        Registrar Producto
+      </button>
+      <a href="#/productos" class="link__tabla">Ver lista de productos</a>
+    </form>
+  </section>
+</main>

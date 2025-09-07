@@ -9,15 +9,13 @@ export const estilistasController = async () => {
     try {
       // Llamada al endpoint que devuelve los trabajadores
       const trabajadores = await solicitudes.get("usuarios/trabajadores");
-      console.log(trabajadores);
-
-
+      console.log("Lista trabajadores:", trabajadores);
 
       // Limpiar contenedor
       contenedor.innerHTML = "";
 
       // Recorrer y renderizar cada trabajador
-      trabajadores.forEach(t => { 
+      trabajadores.forEach(t => {
         const tarjeta = document.createElement("a");
         tarjeta.href = "#/agendar";
         tarjeta.className = "estilista estilista--hover";
@@ -34,27 +32,32 @@ export const estilistasController = async () => {
             <div class="estilista__telefono">Tel.: ${telefono}</div>
           </div>
         `;
-       tarjeta.addEventListener("click", async () => {
-  try {
-    // Hacemos petición al backend con el id del trabajador
-    const trabajadorDetalle = await solicitudes.get(`usuarios/${t.id}`);
 
-    console.log("Detalle trabajador:", trabajadorDetalle);
+        tarjeta.addEventListener("click", async () => {
+          try {
+            // Hacemos petición al backend con el id del trabajador
+            const trabajadorDetalle = await solicitudes.get(`usuarios/${t.id}`);
+            console.log("Detalle trabajador:", trabajadorDetalle);
 
-    // Guardamos el trabajador con su id_roles
-    sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(trabajadorDetalle));
+            // Guardamos solo lo necesario
+            const trabajadorSeleccionado = {
+              id: trabajadorDetalle.id,           // id_usuario real
+              nombre: trabajadorDetalle.nombre,   // nombre del trabajador
+              id_roles: trabajadorDetalle.id_roles // id_roles para cargar servicios
+            };
 
-    window.location.hash = "#/agendar";
-  } catch (err) {
-    console.error("Error obteniendo detalle del trabajador:", err);
-    error("No se pudo obtener el rol del trabajador");
-  }
-});
+            sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(trabajadorSeleccionado));
 
+            // Redirigir a agendar
+            window.location.hash = "#/agendar";
+          } catch (err) {
+            console.error("Error obteniendo detalle del trabajador:", err);
+            error("No se pudo obtener el rol del trabajador");
+          }
+        });
 
         contenedor.appendChild(tarjeta);
       });
-
     } catch (err) {
       console.error("Error cargando trabajadores:", err);
       error("No se pudieron cargar los trabajadores.");
@@ -64,5 +67,6 @@ export const estilistasController = async () => {
   // 🔹 Inicializar
   await cargarTrabajadores();
 };
+
 
 

@@ -3,15 +3,7 @@
 const url = "http://localhost:8080/pruebaApi/api";
 
 /**
- * 🔧 Helper para codificar objetos a formato x-www-form-urlencoded
- */
-const encodeForm = (data) =>
-  Object.keys(data)
-    .map((key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]))
-    .join("&");
-
-/**
- * 🔧 Helper para añadir el token en headers si existe
+ * Helper para añadir el token en headers si existe
  */
 function getAuthHeaders() {
   const token = localStorage.getItem("access_token");
@@ -25,8 +17,8 @@ function getAuthHeaders() {
 export const get = async (endpoint) => {
   const res = await fetch(`${url}/${endpoint}`, {
     method: "GET",
-    // credentials: "include",
     headers: {
+      "Content-Type": "application/json",
       ...getAuthHeaders(),
     },
   });
@@ -36,42 +28,37 @@ export const get = async (endpoint) => {
 };
 
 /**
- * Realiza una petición POST al backend
- * @param {object} datos - Datos a enviar en el body
+ * Realiza una petición POST al backend (JSON)
  * @param {string} endpoint - Ruta del endpoint (ejemplo: "auth/login")
+ * @param {object} datos - Datos a enviar en el body
  */
-// solicitudes.js
 export const post = async (endpoint, datos = {}) => {
   const res = await fetch(`${url}/${endpoint}`, {
     method: "POST",
-    // credentials: "include",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       ...getAuthHeaders(),
     },
-    body: new URLSearchParams(datos),
+    body: JSON.stringify(datos),
   });
 
   if (!res.ok) throw new Error(`Error POST ${endpoint}: ${res.status}`);
   return await res.json();
 };
 
-
-
 /**
- * Realiza una petición PUT al backend
- * @param {object} datos - Datos a enviar en el body
+ * Realiza una petición PUT al backend (JSON)
  * @param {string} endpoint - Ruta del endpoint (ejemplo: "usuarios/1")
+ * @param {object} datos - Datos a enviar en el body
  */
-export const put = async (datos, endpoint) => {
+export const put = async (endpoint, datos = {}) => {
   const res = await fetch(`${url}/${endpoint}`, {
     method: "PUT",
-    // credentials: "include",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
+      "Content-Type": "application/json",
       ...getAuthHeaders(),
     },
-    body: encodeForm(datos),
+    body: JSON.stringify(datos),
   });
 
   if (!res.ok) throw new Error(`Error PUT ${endpoint}: ${res.status}`);
@@ -85,8 +72,8 @@ export const put = async (datos, endpoint) => {
 export const delet = async (endpoint) => {
   const res = await fetch(`${url}/${endpoint}`, {
     method: "DELETE",
-     //credentials: "include",
     headers: {
+      "Content-Type": "application/json",
       ...getAuthHeaders(),
     },
   });
@@ -94,3 +81,4 @@ export const delet = async (endpoint) => {
   if (!res.ok) throw new Error(`Error DELETE ${endpoint}: ${res.status}`);
   return await res.json();
 };
+

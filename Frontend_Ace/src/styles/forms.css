@@ -7,6 +7,11 @@
   width: 100%;
   max-width: 1200px;     /* ancho máximo alineado con el header */
   padding: 0 9px;
+  
+}
+/* -------tabla trabajadores-------- */
+.admin__main--tabla{ 
+ margin: 100px auto;
 }
 
 /* Sección formulario */
@@ -124,6 +129,20 @@
   cursor: pointer;
   font-weight: bold;
 }
+.link__tabla{
+ text-decoration:  none;
+ color: var(--rosa-marron);
+ margin-bottom: 10px;
+ text-align: center;
+  text-decoration: underline;
+  font-weight: bold;
+}
+.link__tabla:hover{
+color: var(--rojo-vino);
+font-weight: bold;
+}
+
+/* -------------------Login----------------- */
 .login {
   display: flex;
   justify-content: center;
