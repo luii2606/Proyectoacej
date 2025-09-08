@@ -27,6 +27,7 @@ export const get = async (endpoint) => {
   return await res.json();
 };
 
+
 /**
  * Realiza una petición POST al backend (JSON)
  * @param {string} endpoint - Ruta del endpoint (ejemplo: "auth/login")

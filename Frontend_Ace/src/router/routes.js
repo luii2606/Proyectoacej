@@ -5,6 +5,7 @@ import { registroController } from "../controllers/registroController.js";
 import { agendarController } from "../controllers/agendarController.js";
 import { estilistasController } from "../controllers/estilistasController.js";
 import { productosController } from "../controllers/productosController.js";
+import { productosClienteController } from "../controllers/productosClienteController.js";
 
 export const routers = {
    login: {
@@ -17,7 +18,7 @@ export const routers = {
     path: "auth/registro/index.html",
     controller:registroController,
     private: false
-  },
+  }, 
   cliente: {
     path: "clientes/agendar-estilistas/index.html",
     controller:estilistasController,
@@ -29,12 +30,15 @@ export const routers = {
     controller:agendarController, // controlador de esa vista
     private: false
   },
+  agendarProductos: {
+    path: "clientes/agendar/productos-cards.html", // tu nueva vista
+    controller:productosClienteController, // controlador de esa vista
+    private: false
+  },
 
   adminTrabajadores: {
-      path: "admin/gestionProductos/productos-form.html",
-    //path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
-    //controller:trabajadorController, // controlador de esa vista
-    controller:productosController,
+    path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
+    controller:trabajadorController, // controlador de esa vista
     private: false
   },
 
@@ -45,10 +49,11 @@ export const routers = {
   },
 
   productos: {
-    //path: "admin/gestionProductos/productos-from.html", // tu nueva vista
-    //controller:productosController, // controlador de esa vista
+    path: "admin/gestionProductos/productos-from.html", // tu nueva vista
+    controller:productosController, // controlador de esa vista
     private: false
   },
+
   tablaProductos: {
     path: "admin/gestionProductos/productos-tabla.html", // tu nueva vista
     controller:productosController, // controlador de esa vista

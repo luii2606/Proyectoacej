@@ -1,34 +1,41 @@
 <main class="cliente__main">
-    <section class="cliente__cuadro">
-      <h2 class="cuadro__titulo">Agendar Cita</h2>
-      <form class="formulario">
-        <input type="hidden" id="id-trabajador" name="id_trabajador">
-        <input type="hidden" name="estilista" id="campo-estilista" />
+  <section class="cliente__cuadro">
+    <h2 class="cuadro__titulo">Agendar Cita</h2>
+    <form id="form-orden" class="formulario">
+      <input type="hidden" id="id-trabajador" name="id_trabajador">
+      <input type="hidden" name="estilista" id="campo-estilista" />
 
-        <label class="formulario__label">Fecha:
-          <input type="date" id="fecha" class="formulario__input" />
-        </label>
+      <label class="formulario__label">Fecha:
+        <input type="date" id="fecha" class="formulario__input" required />
+      </label>
 
-        <label class="formulario__label">Hora:
-          <select id="hora" class="formulario__input">
-            <option value="">Selecciona una hora...</option>
-          </select>
-        </label>
+      <label class="formulario__label">Hora:
+        <select id="hora" class="formulario__input" required>
+          <option value="">Selecciona una hora...</option>
+        </select>
+      </label>
 
-        <label class="formulario__label">Servicio:
-          <select id="select-servicio" class="formulario__input">
-            <option value="">Selecciona un servicio...</option>
-          </select>
-        </label>
+      <label class="formulario__label">Servicio:
+        <select id="select-servicio" class="formulario__input" required>
+          <option value="">Selecciona un servicio...</option>
+        </select>
+      </label>
 
-        <label class="formulario__label" for="modalidad">Modalidad:
-          <select id="modalidad" name="modalidad" class="formulario__input">
-            <option value="">Seleccione una modalidad</option>
-          </select>
-        </label>
+      <label class="formulario__label" for="modalidad">Modalidad:
+        <select id="modalidad" name="modalidad" class="formulario__input" required>
+          <option value="">Seleccione una modalidad</option>
+        </select>
+      </label>
 
-        <button type="submit" class="formulario__boton">Agendar</button>
-      </form>
-      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    </section>
-  </main>
+      <!-- 🔹 Productos seleccionados -->
+      <div class="formulario__productos">
+        <h3 class="formulario__productos-titulo">Productos seleccionados</h3>
+        <div id="orden-productos-list" class="formulario__productos-list"></div>
+      </div>
+
+      <button type="submit" class="formulario__boton">Agendar</button>
+      <a href="#/agendarProductos" class="link__tabla">Ver productos</a>
+    </form>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </section>
+</main>
