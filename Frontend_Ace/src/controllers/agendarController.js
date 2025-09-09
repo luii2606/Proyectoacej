@@ -1,11 +1,11 @@
+// agendarController.js
 import * as solicitudes from "../helpers/solicitudes.js";
 import { error } from "../helpers/alertas.js";
 
 export const agendarController = async () => {
-  // 🔹 Recuperamos el trabajador seleccionado y cliente logueado
   const trabajador = JSON.parse(sessionStorage.getItem("trabajadorSeleccionado"));
   const cliente = JSON.parse(sessionStorage.getItem("usuarioLogueado")); 
-  const clientee = localStorage.getItem("id_usuario");
+  const idCliente = localStorage.getItem("id_usuario");
 
   console.log("Trabajador en sessionStorage:", trabajador);
   console.log("Cliente en sessionStorage:", cliente);
@@ -15,13 +15,13 @@ export const agendarController = async () => {
     return;
   }
 
-  // 🔹 Cargamos datos del trabajador en el formulario
+  // Mostrar datos del trabajador en el formulario
   document.querySelector("#id-trabajador").value = trabajador.id || "";
   document.querySelector("#campo-estilista").value = trabajador.nombre || "";
   const titulo = document.querySelector(".cuadro__titulo");
   if (titulo) titulo.textContent = `Agendar Cita con ${trabajador.nombre}`;
 
-  // 🔹 Cargar servicios según rol del estilista
+  // --- Servicios ---
   const selectServicio = document.querySelector("#select-servicio");
   try {
     const servicios = await solicitudes.get(`servicios/rol/${trabajador.id_roles}`);
@@ -37,7 +37,7 @@ export const agendarController = async () => {
     error("No se pudieron cargar los servicios");
   }
 
-  // 🔹 Cargar modalidades
+  // --- Modalidades ---
   const selectModalidad = document.querySelector("#modalidad");
   try {
     const modalidades = await solicitudes.get("modalidades");
@@ -53,7 +53,7 @@ export const agendarController = async () => {
     error("No se pudieron cargar las modalidades");
   }
 
-  // 🔹 Horarios según fecha
+  // --- Horarios ---
   const fechaInput = document.querySelector("#fecha");
   const selectHora = document.querySelector("#hora");
 
@@ -74,7 +74,7 @@ export const agendarController = async () => {
     });
   });
 
-  // 🔹 Manejo del submit
+  // --- Submit ---
   const form = document.querySelector(".formulario");
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -94,37 +94,32 @@ export const agendarController = async () => {
       return;
     }
 
-    // 👇 Recuperar productos seleccionados de localStorage
-    const productosSeleccionados = JSON.parse(localStorage.getItem("productosSeleccionados")) || [];
-
-    // 👇 Objeto final que se enviará al backend
+    // 👇 Ahora los productos no se envían aquí
     const nuevaOrden = {
-      id_trabajador: trabajador.id,   // id_usuario del trabajador
-      id_usuario: clientee,           // id_usuario del cliente
-      id_servicio: servicio,
-      id_modalidad: modalidad,
+      id_trabajador: trabajador.id,
+      id_usuario: parseInt(idCliente),
+      id_servicio: parseInt(servicio),
+      id_modalidad: parseInt(modalidad),
       fecha,
       hora,
-      productos: productosSeleccionados // opcionales
+      productos: null // se mandan luego en agendarProductos
     };
 
     try {
       const respuesta = await solicitudes.post("ordenes", nuevaOrden);
       console.log("✅ Orden creada:", respuesta);
 
-      // limpiar productos seleccionados tras enviar
-      localStorage.removeItem("productosSeleccionados");
+      // Guardamos idOrden para usarlo en agendarProductos
+      localStorage.setItem("idOrdenActual", respuesta.idOrden);
 
-      Swal.fire("Éxito", "Tu cita fue agendada correctamente", "success");
+      Swal.fire("Éxito", "Tu cita fue agendada correctamente", "success").then(() => {
+        // Ir a la vista de selección de productos
+        window.location.hash = "#/agendarProductos";
+      });
+
     } catch (err) {
       console.error("❌ Error al crear orden:", err);
       error("No se pudo agendar la cita");
     }
   });
 };
-
-
-
-
-
- 

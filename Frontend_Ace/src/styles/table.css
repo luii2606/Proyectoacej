@@ -246,3 +246,8 @@ align-items:flex-start;
 .admin__tabla tr:hover {
   background-color: var(--rosa-pastel);
 }
+.sin__link{
+  text-decoration: none;
+  color: var(--crema-claro);
+
+}

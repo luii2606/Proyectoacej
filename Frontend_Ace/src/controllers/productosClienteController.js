@@ -1,4 +1,3 @@
-// productosClienteController.js
 import { get } from "../helpers/solicitudes.js";
 import { error } from "../helpers/alertas.js";
 
@@ -24,15 +23,16 @@ export const productosClienteController = async () => {
     // Esperar a que los elementos estén en el DOM
     const contenedor = await waitForElement("#productos-list");
     const btnGuardar = await waitForElement("#productos-guardar");
+    const btnNo = await waitForElement("#productos-no");
 
-    // Recuperar productos previamente seleccionados
+    // Recuperar productos previamente seleccionados (siempre array)
     let seleccionados = JSON.parse(localStorage.getItem("productosSeleccionados")) || [];
 
     const estaSeleccionado = (id) => seleccionados.some((p) => p.id === id);
 
     // Traer productos del backend
     const lista = await get("productos");
-    console.log("Productos recibidos:", lista); // 👈 para debug
+    console.log("Productos recibidos:", lista); // 👈 debug
 
     contenedor.innerHTML = "";
 
@@ -63,16 +63,24 @@ export const productosClienteController = async () => {
       });
     });
 
-    // Guardar selección al hacer clic en el botón
+    // ✅ Botón: agregar productos seleccionados
     btnGuardar.addEventListener("click", () => {
       localStorage.setItem("productosSeleccionados", JSON.stringify(seleccionados));
-      alert("Productos seleccionados guardados!");
+      window.location.hash = "#/orden-completada"; // Redirigir
+    });
+
+    // ❌ Botón: no gracias
+    btnNo.addEventListener("click", () => {
+      localStorage.removeItem("productosSeleccionados");
+      window.location.hash = "#/orden-completada"; // Redirigir
     });
   } catch (err) {
     console.error("Error cargando productos:", err);
     error("No se pudieron cargar los productos");
   }
 };
+
+
 
 
 

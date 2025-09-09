@@ -1,6 +1,21 @@
-<section id="tablaProductos" class="productos" style="display:none">
-  <h2 class="productos__titulo">Selecciona tus productos</h2>
-  <div id="productos-list" class="productos__grid"></div>
-  <button id="productos-guardar" class="productos__boton">Guardar selección</button>
-  <a href="#/orden" class="link__tabla">Volver a la orden</a>
+<section id="tablaProductos" class="productos">
+  <header class="productos__header">
+    <h2 class="productos__titulo">¿Deseas agregar productos a tu cita?</h2>
+    <p class="productos__subtitulo">
+      Selecciona los productos que quieras añadir, o continúa sin productos.
+    </p>
+  </header>
+
+  <div id="productos-list" class="productos__grid">
+    <!-- Aquí se insertan las cards dinámicamente -->
+  </div>
+
+  <footer class="productos__acciones">
+    <button id="productos-no" class="productos__boton productos__boton--secundario">
+      <a class= "sin__link" href="#">No, gracias</a>
+    </button>
+    <button id="productos-guardar" class="productos__boton productos__boton--primario">
+      <a class= "sin__link" href="#">Agregar productos seleccionados</a>
+    </button>
+  </footer>
 </section>
