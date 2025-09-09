@@ -33,8 +33,7 @@ export const agendarController = async () => {
       selectServicio.appendChild(option);
     });
   } catch (err) {
-    console.error("Error cargando servicios:", err);
-    error("No se pudieron cargar los servicios");
+    Swal.fire("Error", "No se pudieron cargar los servicios", "error");
   }
 
   // --- Modalidades ---
@@ -49,29 +48,53 @@ export const agendarController = async () => {
       selectModalidad.appendChild(option);
     });
   } catch (err) {
-    console.error("Error cargando modalidades:", err);
-    error("No se pudieron cargar las modalidades");
+    Swal.fire("Error", "No se pudieron cargar las modalidades", "error");
   }
 
   // --- Horarios ---
   const fechaInput = document.querySelector("#fecha");
   const selectHora = document.querySelector("#hora");
 
-  fechaInput.addEventListener("change", () => {
+  fechaInput.addEventListener("change", async () => {
     const fecha = fechaInput.value;
     if (!fecha) return;
 
     selectHora.innerHTML = `<option value="">Selecciona una hora...</option>`;
+
+    // 🔹 Consultar horas ocupadas del backend
+    let horasOcupadas = [];
+    try {
+      horasOcupadas = await solicitudes.get(`ordenes/ocupadas/${trabajador.id}/${fecha}`);
+    } catch (err) {
+      Swal.fire("Error", "No se pudieron obtener las horas ocupadas", "error");
+    }
+
+    // 🔹 Generar todas las horas posibles (9:00 a 18:00)
     const horas = [];
     for (let h = 9; h <= 18; h++) {
       horas.push(`${h.toString().padStart(2, "0")}:00`);
     }
-    horas.forEach(hora => {
-      const option = document.createElement("option");
-      option.value = hora;
-      option.textContent = hora;
-      selectHora.appendChild(option);
-    });
+
+    // 🔹 Renderizar horas en el select
+    // 🔹 Renderizar horas en el select
+    console.log(horas);
+    console.log(horasOcupadas);
+    
+horas.forEach(hora => {
+  const option = document.createElement("option");
+  option.value = hora;
+
+  if (horasOcupadas.includes(hora)) {
+    option.textContent = `${hora} (Ocupada)`;
+    option.disabled = true; // 🚫 no seleccionable
+    option.style.color = "gray"; // 👁️ se ve diferente
+  } else {
+    option.textContent = hora;
+  }
+
+  selectHora.appendChild(option);
+});
+
   });
 
   // --- Submit ---
@@ -94,7 +117,6 @@ export const agendarController = async () => {
       return;
     }
 
-    // 👇 Ahora los productos no se envían aquí
     const nuevaOrden = {
       id_trabajador: trabajador.id,
       id_usuario: parseInt(idCliente),
@@ -109,17 +131,16 @@ export const agendarController = async () => {
       const respuesta = await solicitudes.post("ordenes", nuevaOrden);
       console.log("✅ Orden creada:", respuesta);
 
-      // Guardamos idOrden para usarlo en agendarProductos
       localStorage.setItem("idOrdenActual", respuesta.idOrden);
 
       Swal.fire("Éxito", "Tu cita fue agendada correctamente", "success").then(() => {
-        // Ir a la vista de selección de productos
         window.location.hash = "#/agendarProductos";
       });
 
     } catch (err) {
-      console.error("❌ Error al crear orden:", err);
-      error("No se pudo agendar la cita");
+      Swal.fire("Error", "No se pudo agendar la cita porque ya existe una reserva con la misma hora que acabas de elegir", "error");
     }
   });
 };
+
+

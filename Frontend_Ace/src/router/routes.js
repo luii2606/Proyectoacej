@@ -6,6 +6,8 @@ import { agendarController } from "../controllers/agendarController.js";
 import { estilistasController } from "../controllers/estilistasController.js";
 import { productosController } from "../controllers/productosController.js";
 import { productosClienteController } from "../controllers/productosClienteController.js";
+//import { reservasController } from "../controllers/reservasContoller.js";
+
 
 export const routers = {
    login: {
@@ -35,6 +37,11 @@ export const routers = {
     controller:productosClienteController, // controlador de esa vista
     private: false
   },
+  // verCitas:{
+  //   path: "clientes/reservas/index.html",
+  //   controller: reservasController,
+  //   private: false
+  // },
 
   adminTrabajadores: {
     path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
@@ -49,7 +56,7 @@ export const routers = {
   },
 
   productos: {
-    path: "admin/gestionProductos/productos-from.html", // tu nueva vista
+    path: "admin/gestionProductos/productos-form.html", // tu nueva vista
     controller:productosController, // controlador de esa vista
     private: false
   },
@@ -59,4 +66,15 @@ export const routers = {
     controller:productosController, // controlador de esa vista
     private: false
   },
+  movimientosTrabajador: {
+    path: "admin/movimientos/index.html", // tu nueva vista
+    controller:productosController, // controlador de esa vista
+    private: false
+  },
+  visualizarFacturas: {
+    path: "admin/facturas/index.html", // tu nueva vista
+    controller:productosController, // controlador de esa vista
+    private: false
+  },
+  
 }
