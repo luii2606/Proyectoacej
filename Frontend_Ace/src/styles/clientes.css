@@ -166,6 +166,116 @@
 .productos__volver:hover {
   text-decoration: underline;
 }
+/* ------------------- */
+.ordenes {
+  padding: 1rem;
+}
+
+.ordenes__titulo {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.ordenes__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.orden-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.orden-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.orden-card__title {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.orden-card__estado {
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.orden-card__estado--pendiente {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.orden-card__estado--confirmada {
+  background: #cce5ff;
+  color: #004085;
+}
+
+.orden-card__estado--completada {
+  background: #d4edda;
+  color: #155724;
+}
+
+.orden-card__estado--cancelada {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.orden-card__acciones {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.orden-card__btn {
+  flex: 1;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.orden-card__btn--pagar {
+  background: #28a745;
+  color: #fff;
+}
+
+.orden-card__btn--cancelar {
+  background: #dc3545;
+  color: #fff;
+}
+
+.orden-card__btn--productos {
+  background: #007bff;
+  color: #fff;
+}
+
+.orden-card__productos {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.orden-card__productos-empty {
+  color: #666;
+  font-style: italic;
+}
+
+.orden-card__producto {
+  margin: 0.25rem 0;
+}
+
 
 
 
