@@ -1,3 +1,5 @@
+
+
 .admin__main {
   display: flex;
   flex-direction: column;
@@ -24,6 +26,7 @@
   width: 100%;
   max-width: 400px; 
   box-shadow: 0 2px 6px rgba(0,0,0,0.05);;
+  margin-top: 30px;
 }
 .form--trabajador {
   display: grid; 
@@ -77,7 +80,7 @@
   width: 100%;
   max-width: 400px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-  margin: 20px;
+  margin: 90px;
 }
 .cliente__cuadro--admin{
    background-color: var(--blanco);
@@ -113,7 +116,7 @@
   color: #4e3e3e;
 }
 
-.formulario__input {
+.formulario__input, .producto-cantidad {
   padding: 10px;
   border: 1px solid var(--rosa-pastel);
   border-radius: 10px;
@@ -148,21 +151,21 @@ font-weight: bold;
   justify-content: center;
   align-items: center;
   min-height: 400px;
-  padding: 6vw;
+  padding: 7vw;
 }
 .login__container {
   background-color: var(--rosa-pastel-oscuro);
   border-radius: 30px;
   width: 300px;
   max-width: 300px;
-  padding: 60px 70px;
+  padding: 95px 70px;
   text-align: center;
 }
 
 .login__container--registro {
-  height: 420px;
-  width: 500px;
-  padding: 20px 70px;
+  /* height: 420px; */
+  width: 300px;
+  padding: 95px 70px;
 }
 
 .login__title {
@@ -214,4 +217,11 @@ font-weight: bold;
   text-decoration: none;
   transition: all 0.3s ease;
   cursor: pointer;
+}
+@media (max-width: 414px) and (max-height: 896px) {
+  
+  .login__container{
+    margin-top: 55px;
+  }
+  
 }

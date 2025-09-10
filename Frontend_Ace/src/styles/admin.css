@@ -5,8 +5,9 @@
 .header__menu-link--admin{
   background-color: var(--rosa-pastel-oscuro);
   color: var(--crema-claro);
-  padding: 0.2vw 1.2vw;
+  padding: 0.5vw 0.5vw;
   text-align: center;
+  /* padding:7px; */
   
 }
 .header__menu-link--admin:hover{
@@ -14,7 +15,7 @@
   color: var(--marron-claro);
 }
 .header__menu-list--admin{
-  gap: 20px;
+  gap: 30px;
   
 }
 .titulo-bienvenida--admin{

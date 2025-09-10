@@ -26,6 +26,7 @@ export function headerController(container) {
       break;
     default: // inicio (login o visitante)
       renderheaderIncio(container);
+      attachLogout(container);
       break;
   }
 }

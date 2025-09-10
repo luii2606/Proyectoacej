@@ -1,7 +1,7 @@
 /* ------Bloque Estilistas----- */
 .estilistas__bloque{
-  margin: 30px;
-  padding: 1rem 1.9rem;
+  margin: 100px;
+  padding: 1rem 4.9rem;
 }
 
 .estilista {
@@ -69,8 +69,8 @@
   background: var(--crema-claro);
   border-radius: 1rem;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 900px;
-  margin: 2rem auto;
+  max-width: 1000vw;
+  margin: 2rem 1.5rem auto;
 }
 
 .productos__header {
@@ -129,6 +129,7 @@
   color: white;
   cursor: pointer;
   transition: background 0.2s;
+  margin-top: 9px;
 }
 
 .producto-btn:hover {

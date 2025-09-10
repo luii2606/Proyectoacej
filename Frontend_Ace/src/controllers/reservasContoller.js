@@ -2,16 +2,15 @@ import { get, put, delet } from "../helpers/solicitudes.js";
 import { error, success } from "../helpers/alertas.js";
 
 export const reservasController = async () => {
+  const cliente = JSON.parse(localStorage.getItem("id_usuario"));
+
   const contenedor = document.getElementById("ordenes-list");
   if (!contenedor) return;
+  console.log("Cliente ID:", cliente);
 
   try {
-    const cliente = JSON.parse(sessionStorage.getItem("usuarioLogueado"));
-    console.log(cliente);
-    
-    const ordenes = await get(`ordenes/cliente/${cliente.id}`);
-
-    contenedor.innerHTML = "";2
+    const ordenes = await get(`ordenes/cliente/${cliente}`);
+    contenedor.innerHTML = ""; // ✅ corregido
 
     ordenes.forEach((orden) => {
       const card = document.createElement("div");
@@ -49,10 +48,10 @@ export const reservasController = async () => {
     // --- Listeners ---
     contenedor.addEventListener("click", async (e) => {
       const btn = e.target;
+      const idOrden = btn.dataset.id;
 
       // Ver productos
       if (btn.classList.contains("orden-card__btn--productos")) {
-        const idOrden = btn.dataset.id;
         const productosDiv = document.getElementById(`productos-${idOrden}`);
         productosDiv.style.display =
           productosDiv.style.display === "none" ? "block" : "none";
@@ -84,9 +83,9 @@ export const reservasController = async () => {
       // Pagar
       if (btn.classList.contains("orden-card__btn--pagar")) {
         try {
-          await put(`ordenes/${btn.dataset.id}/pagar`);
+          await put(`ordenes/${idOrden}/pagar`);
           success("✅ Orden pagada con éxito");
-          ordenesClienteController(); // recargar vista
+          reservasController(); // recargar vista
         } catch (err) {
           error("❌ Error al pagar la orden");
         }
@@ -95,9 +94,9 @@ export const reservasController = async () => {
       // Cancelar
       if (btn.classList.contains("orden-card__btn--cancelar")) {
         try {
-          await put(`ordenes/${btn.dataset.id}/cancelar`);
+          await put(`ordenes/${idOrden}/cancelar`);
           success("⚠️ Orden cancelada");
-          ordenesClienteController(); // recargar vista
+          reservasController(); // recargar vista
         } catch (err) {
           error("❌ Error al cancelar la orden");
         }

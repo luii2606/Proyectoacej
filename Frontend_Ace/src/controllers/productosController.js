@@ -164,7 +164,7 @@ export const productosController = async () => {
             const producto = await solicitudes.get(`productos/${btn.dataset.id}`);
 
             // Navegar a la ruta del formulario (hash routing)
-            window.location.hash = "#/adminTrabajadores";
+            window.location.hash = "#/productos";
 
             // Si el formulario ya está en el DOM, inícialo y rellénalo
             const formNow = document.getElementById("form");

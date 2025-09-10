@@ -1,3 +1,4 @@
+@import url("header.css");
 * {
   margin: 0;
   padding: 0;
@@ -21,4 +22,28 @@ body{
    margin: 0;
   background-color: var(--blanco);
   padding: 10px;
+}
+
+@media (max-width: 414px) and (max-height: 896px) {
+  .header {
+    width: 95vw;
+    /* margin-top: 10vw; */
+  }
+  .header__logo-link{
+   width: 30px;
+  }
+  .titulo-bienvenida{
+  font-size: 20px;
+  color: var(--blanco);
+  padding: 40px;
+}
+  /* .header__menu-link {
+      padding: 0.1vw ;
+      font-size: 15px;
+  } */
+  .header__menu-link{
+     display: none;
+
+  }
+
 }

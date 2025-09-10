@@ -80,7 +80,7 @@ export const registroController = async (parametros = null) => {
 
     } catch (err) {
       console.error("❌ Error en registro:", err);
-      error("Ocurrió un error al registrar. Revisa la consola.");
+      error("Ocurrió un error al registrar. Ingresa los datos requeridos.");
     } finally {
       if (btn) { btn.disabled = false; btn.textContent = "Registrarse"; }
     }
