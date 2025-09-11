@@ -6,7 +6,10 @@ import { agendarController } from "../controllers/agendarController.js";
 import { estilistasController } from "../controllers/estilistasController.js";
 import { productosController } from "../controllers/productosController.js";
 import { productosClienteController } from "../controllers/productosClienteController.js";
+import { ordenesTrabajadorController } from "../controllers/clientesController.js";
 import { reservasController } from "../controllers/reservasContoller.js";
+// import { FacturaController } from "../controllers/facturaController.js";
+
 
 
 export const routers = {
@@ -42,7 +45,11 @@ export const routers = {
     controller: reservasController,
     private: false
   },
-
+  //  verFacturas:{
+  //   path: "clientes/facturas/index.html",
+  //   controller: FacturaController,
+  //   private: false
+  // },
   adminTrabajadores: {
     path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
     controller:trabajadorController, // controlador de esa vista
@@ -74,6 +81,11 @@ export const routers = {
   visualizarFacturas: {
     path: "admin/facturas/index.html", // tu nueva vista
     controller:productosController, // controlador de esa vista
+    private: false
+  },
+  visualizarCitasTrabajador: {
+    path: "trabajadores/index.html", // tu nueva vista
+    controller:ordenesTrabajadorController, // controlador de esa vista
     private: false
   },
   

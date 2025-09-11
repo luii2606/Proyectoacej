@@ -67,7 +67,7 @@ export function loginController() {
               window.location.href = '#/cliente';
               break;
             case 3: // Trabajador
-              window.location.href = '#/trabajadores';
+              window.location.href = '#/visualizarCitasTrabajador';
               break;
             default:
               window.location.href = '#/login'; // Fallback
