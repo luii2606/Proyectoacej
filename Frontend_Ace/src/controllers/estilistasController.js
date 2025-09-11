@@ -25,7 +25,6 @@ export const estilistasController = async () => {
         const telefono = t.telefono || "";
 
         tarjeta.innerHTML = `
-          <img src="../helpers/Images/Tony Chopper.jpeg" alt="foto" class="estilista__foto" />
           <div class="estilista__info">
             <div class="estilista__nombre">${nombreUsuario}</div>
             <div class="estilista__descripcion">${nombreRol}</div>

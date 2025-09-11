@@ -123,15 +123,16 @@ export const trabajadorController = async () => {
       e.preventDefault();
       if (!validaciones.validarCampos(e)) return;
 
-      const datos = {
-        nombre: nombre.value.trim(),
-        correo: correo.value.trim(),
-        telefono: telefono.value.trim(),
-        contrasena: contrasena.value,
-        id_tipo_usuario: 3,
-        id_roles: rolSelect?.value || null,
-        id_estado_usuarios: estadoSelect?.value || 1,
-      };
+  const datos = {
+  nombre: nombre.value.trim(),
+  correo: correo.value.trim(),
+  telefono: telefono.value.trim(),
+  contrasena: contrasena.value,
+  id_tipo_usuario: 3, // trabajador fijo
+  id_roles: rolSelect?.value || null,
+  id_estado_usuarios: estadoSelect && estadoSelect.value !== "" ? parseInt(estadoSelect.value) : null
+};
+
 
       try {
         btnGuardar.disabled = true;
@@ -141,7 +142,7 @@ export const trabajadorController = async () => {
           const resp = await solicitudes.put(datos, `usuarios/${idInput.value}`);
           await success(resp.mensaje || "Trabajador actualizado");
         } else {
-          const resp = await solicitudes.post("auth/register", datos);
+          const resp = await solicitudes.post("auth/register-trabajador", datos);
           await success(resp.mensaje || "Trabajador registrado");
         }
 

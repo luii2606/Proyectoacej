@@ -17,6 +17,11 @@
   --blanco: #ffff; 
   --gris: #444;
   --rosa-marron : #8d5c54;
+  --crema_oscuro: #fff3cd;
+  --mostaza: #856404;
+  --gris_claro:#cce5ff;
+  --azul: #004085;
+  --verde: #68c67e;
 }
 body{
    margin: 0;

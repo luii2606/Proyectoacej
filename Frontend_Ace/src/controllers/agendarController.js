@@ -55,6 +55,21 @@ export const agendarController = async () => {
   const fechaInput = document.querySelector("#fecha");
   const selectHora = document.querySelector("#hora");
 
+  // 🔹 Evitar días pasados
+  const hoy = new Date().toISOString().split("T")[0]; 
+  fechaInput.setAttribute("min", hoy);
+
+  // 🔹 Función para formatear a 12 horas con AM/PM
+  const formatearHora = (hora24) => {
+    const [h, m] = hora24.split(":");
+    let horas = parseInt(h, 10);
+    const minutos = m.padStart(2, "0");
+    const ampm = horas >= 12 ? "PM" : "AM";
+    horas = horas % 12;
+    horas = horas ? horas : 12; // 0 -> 12
+    return `${horas}:${minutos} ${ampm}`;
+  };
+
   fechaInput.addEventListener("change", async () => {
     const fecha = fechaInput.value;
     if (!fecha) return;
@@ -65,36 +80,33 @@ export const agendarController = async () => {
     let horasOcupadas = [];
     try {
       horasOcupadas = await solicitudes.get(`ordenes/ocupadas/${trabajador.id}/${fecha}`);
+      horasOcupadas = horasOcupadas.map(h => h.padStart(5, "0"));
     } catch (err) {
       Swal.fire("Error", "No se pudieron obtener las horas ocupadas", "error");
     }
 
-    // 🔹 Generar todas las horas posibles (9:00 a 18:00)
+    // 🔹 Generar todas las horas posibles (09:00 a 18:00)
     const horas = [];
     for (let h = 9; h <= 18; h++) {
       horas.push(`${h.toString().padStart(2, "0")}:00`);
     }
 
     // 🔹 Renderizar horas en el select
-    // 🔹 Renderizar horas en el select
-    console.log(horas);
-    console.log(horasOcupadas);
-    
-horas.forEach(hora => {
-  const option = document.createElement("option");
-  option.value = hora;
+    horas.forEach(hora => {
+      const option = document.createElement("option");
+      option.value = hora;
 
-  if (horasOcupadas.includes(hora)) {
-    option.textContent = `${hora} (Ocupada)`;
-    option.disabled = true; // 🚫 no seleccionable
-    option.style.color = "gray"; // 👁️ se ve diferente
-  } else {
-    option.textContent = hora;
-  }
+      if (horasOcupadas.includes(hora)) {
+        option.textContent = `${formatearHora(hora)} (Ocupada)`;
+        option.disabled = true;
+        option.style.color = "gray";
+        option.style.fontStyle = "italic";
+      } else {
+        option.textContent = formatearHora(hora);
+      }
 
-  selectHora.appendChild(option);
-});
-
+      selectHora.appendChild(option);
+    });
   });
 
   // --- Submit ---
@@ -123,8 +135,8 @@ horas.forEach(hora => {
       id_servicio: parseInt(servicio),
       id_modalidad: parseInt(modalidad),
       fecha,
-      hora,
-      productos: null // se mandan luego en agendarProductos
+      hora, // sigue mandando formato 24h al backend
+      productos: null
     };
 
     try {
@@ -142,5 +154,8 @@ horas.forEach(hora => {
     }
   });
 };
+
+
+
 
 

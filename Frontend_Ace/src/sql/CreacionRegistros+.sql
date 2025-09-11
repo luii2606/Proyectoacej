@@ -1,16 +1,39 @@
 INSERT INTO permisos (nombre, descripcion) VALUES
 ('usuarios.index', 'Listar todos los usuarios'),
-('usuarios.view', 'Listar un usuario'),
 ('usuarios.create', 'Crear usuarios'),
-('usuarios.update', 'Actualizar/editar los usuarios'),
 ('usuarios.delete', 'Eliminar usuarios'),
-('trabajadores.view', 'Acceder al CRUD de los trabajadores');
+('productos.create', 'Crear productos'),
+('productos.update', 'editar productos'),
+('productos.delete', 'eliminar productos'),
+('productos.index', 'Listar todos los productos'),
+('movimientostrabajador.index', 'listar todas las citas'),
+('facturas.index', 'listar todas las facturas'),
+('Orden.index', 'Listar todas las ordenes'),
+('Orden.create', 'crear una orden'),
+('Orden.update', 'Editar estado de las ordenes');
+
+insert into permisos_tipo_usuario (id_permisos,id_tipo_usuario) values 
+  (1,1),
+  (2,1),
+  (3,1),
+  (4,1),
+  (5,1),
+  (6,1),
+  (7,1),
+  (8,1),
+  (9,1),
+  (10,2),
+  (10,3),
+  (11,2),
+  (12,2),
+  (12,3);
 
 INSERT INTO tipo_usuario (id, nombre) VALUES
 (1, 'Administrador'),
 (2, 'Cliente'),
 (3, 'Trabajador');
 
+select * from roles;
 INSERT INTO roles (nombre) VALUES
 ('Administrador'),
 ('Cliente'),
@@ -68,28 +91,6 @@ INSERT INTO productos (id, nombre_producto, descripcion, precio, id_Estado_produ
 (5, 'tratamiento de coconout', 'Hidrata el cabello', 40000.00, 1, 18),
 (6, 'aceite de coco', 'restaurar puntas dañadas', 40000.00, 1, 5);
 
-SET foreign_key_checks = 0; 
-SET foreign_key_checks = 1; 
-select * from estado_producto;
-select* from orden;
-select * from usuarios_orden;
-select * from usuarios;
-delete from orden where id= 14;
-select * from  usuarios_orden;
-select * from productos;
-select *from detalle_orden_producto;
-select * from servicios;
-select * from detalle_orden_producto;
-select * from usuarios;
-select * from orden;
-delete from orden where id <29;
-select * from productos;
-SET foreign_key_checks = 0; 
-SET foreign_key_checks = 1; 
 
 
 
-
-     
-            
-            select * from usuarios;

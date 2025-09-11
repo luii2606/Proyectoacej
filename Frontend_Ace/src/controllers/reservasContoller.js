@@ -1,6 +1,15 @@
 import { get, put, delet } from "../helpers/solicitudes.js";
 import { error, success } from "../helpers/alertas.js";
 
+// 👉 Función para convertir hora militar a formato 12h AM/PM
+function formatearHora(hora) {
+  if (!hora) return "";
+  const [h, m] = hora.split(":").map(Number);
+  const ampm = h >= 12 ? "PM" : "AM";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${m.toString().padStart(2, "0")} ${ampm}`;
+}
+
 export const reservasController = async () => {
   const clienteId = localStorage.getItem("id_usuario");
   const contenedor = document.getElementById("ordenes-list");
@@ -31,10 +40,8 @@ export const reservasController = async () => {
       const card = document.createElement("div");
       card.className = "orden-card";
 
-      // Normalizamos el estado
       const estado = (orden.estado_nombre || "pendiente").toLowerCase();
 
-      // --- Acciones dinámicas según estado ---
       let accionesHTML = "";
       if (estado === "pendiente") {
         accionesHTML = `
@@ -45,9 +52,12 @@ export const reservasController = async () => {
         accionesHTML = `
           <button class="orden-card__btn orden-card__btn--eliminar" data-id="${orden.id}">Eliminar</button>
         `;
+      } else if (estado === "confirmada") {
+        accionesHTML = `
+          <button class="orden-card__btn orden-card__btn--ver-factura" data-id="${orden.id}">Ver Factura</button>
+        `;
       }
 
-      // Siempre se puede ver productos
       accionesHTML += `
         <button class="orden-card__btn orden-card__btn--productos" data-id="${orden.id}">Ver productos</button>
       `;
@@ -62,7 +72,7 @@ export const reservasController = async () => {
 
         <div class="orden-card__info">
           <p><b>Fecha:</b> ${orden.fecha}</p>
-          <p><b>Hora:</b> ${orden.hora}</p>
+          <p><b>Hora:</b> ${formatearHora(orden.hora)}</p>
           <p><b>Servicio:</b> ${orden.servicio_nombre}</p>
           <p><b>Trabajador:</b> ${orden.trabajador_nombre}</p>
         </div>
@@ -79,12 +89,12 @@ export const reservasController = async () => {
       contenedor.appendChild(card);
     });
 
-    // --- Listeners ---
+    // ================== Listeners ==================
     contenedor.addEventListener("click", async (e) => {
       const btn = e.target;
       const idOrden = btn.dataset.id;
 
-      // Ver productos  
+      // Ver productos
       if (btn.classList.contains("orden-card__btn--productos")) {
         const productosDiv = document.getElementById(`productos-${idOrden}`);
         productosDiv.style.display =
@@ -129,7 +139,6 @@ export const reservasController = async () => {
           await put(`ordenes/${idOrden}/pagar`);
           success("✅ Orden pagada con éxito");
 
-          // 🔥 Actualizar DOM directamente
           const card = btn.closest(".orden-card");
           const estadoSpan = card.querySelector(".orden-card__estado");
           estadoSpan.textContent = "Confirmada";
@@ -138,6 +147,9 @@ export const reservasController = async () => {
 
           const accionesDiv = card.querySelector(".orden-card__acciones");
           accionesDiv.innerHTML = `
+            <button class="orden-card__btn orden-card__btn--ver-factura" data-id="${idOrden}">
+              Ver Factura
+            </button>
             <button class="orden-card__btn orden-card__btn--productos" data-id="${idOrden}">
               Ver productos
             </button>
@@ -153,7 +165,6 @@ export const reservasController = async () => {
           await put(`ordenes/${idOrden}/cancelar`);
           success("⚠️ Orden cancelada");
 
-          // 🔥 Actualizar DOM directamente
           const card = btn.closest(".orden-card");
           const estadoSpan = card.querySelector(".orden-card__estado");
           estadoSpan.textContent = "Cancelada";
@@ -184,6 +195,78 @@ export const reservasController = async () => {
           card.remove();
         } catch (err) {
           error("❌ Error al eliminar la orden");
+        }
+      }
+
+      // ================== Ver Factura ==================
+      if (btn.classList.contains("orden-card__btn--ver-factura")) {
+        try {
+          const factura = await get(`facturas/orden/${idOrden}`);
+
+          const htmlFactura = `
+            <div style="text-align:left">
+              <p><b>Cliente:</b> ${factura.clienteNombre}</p>
+              <p><b>Trabajador:</b> ${factura.trabajadorNombre}</p>
+              <p><b>Servicio:</b> ${factura.servicioNombre} ($${factura.servicioPrecio})</p>
+              <p><b>Total:</b> $${factura.totalFinal}</p>
+            </div>
+          `;
+
+          Swal.fire({
+            title: `Factura de Orden #${idOrden}`,
+            html: htmlFactura,
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonText: "⬇️ Descargar PDF",
+            cancelButtonText: "Cerrar",
+          }).then((result) => {
+            if (result.isConfirmed) {
+              try {
+                // ✅ Generar PDF con jsPDF en frontend
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF();
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(18);
+                doc.text("Factura de Servicio", 105, 20, { align: "center" });
+
+                doc.setLineWidth(0.5);
+                doc.line(20, 25, 190, 25);
+
+                doc.setFont("helvetica", "normal");
+                doc.setFontSize(12);
+                doc.text(`N° Orden: ${idOrden}`, 20, 40);
+                doc.text(`Cliente: ${factura.clienteNombre}`, 20, 50);
+                doc.text(`Trabajador: ${factura.trabajadorNombre}`, 20, 60);
+
+                doc.setFont("helvetica", "bold");
+                doc.text("Detalle del Servicio", 20, 80);
+
+                doc.setFont("helvetica", "normal");
+                doc.text(`Servicio: ${factura.servicioNombre}`, 20, 90);
+                doc.text(`Precio Servicio: $${factura.servicioPrecio}`, 20, 100);
+
+                doc.setLineWidth(0.3);
+                doc.line(20, 110, 190, 110);
+
+                doc.setFont("helvetica", "bold");
+                doc.setFontSize(14);
+                doc.text(`Total a pagar: $${factura.totalFinal}`, 20, 125);
+
+                doc.setFontSize(10);
+                doc.setFont("helvetica", "italic");
+                doc.text("Gracias por confiar en nuestros servicios ❤️", 105, 280, {
+                  align: "center",
+                });
+
+                doc.save(`factura_${idOrden}.pdf`);
+              } catch (err) {
+                error("❌ No se pudo generar el PDF");
+              }
+            }
+          });
+        } catch (err) {
+          error("❌ No se pudo cargar la factura");
         }
       }
     });

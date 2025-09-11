@@ -39,9 +39,10 @@
 
 .estilista__nombre {
   font-weight: bold;
-  color: var(--marron);
+  color: var(--rojo-vino);
   font-size: 1.2em;
   margin-bottom: 5px;
+
  
 }
 
@@ -95,7 +96,7 @@
 }
 
 .producto-item {
-  background: #fff;
+  background: var(--blanco);
   border-radius: 1rem;
   padding: 2rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.08);
@@ -117,7 +118,7 @@
 
 .producto-item p {
   font-size: 0.95rem;
-  color: #555;
+  color: var(--gris);
   margin-bottom: 0.5rem;
 }
 
@@ -126,7 +127,7 @@
   border: none;
   border-radius: 0.8rem;
   background: var(--rosa-pastel);
-  color: white;
+  color: var(--blanco);
   cursor: pointer;
   transition: background 0.2s;
   margin-top: 9px;
@@ -145,7 +146,7 @@
 
 .productos__boton {
   background: var(--marron-claro);
-  color: white;
+  color: var(--blanco);
   border: none;
   padding: 0.8rem 1.5rem;
   border-radius: 1rem;
@@ -184,13 +185,14 @@
 }
 
 .orden-card {
-  background: #fff;
+  background: var(--blanco);
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  border: 5px solid var(--crema_oscuro);
 }
 
 .orden-card__header {
@@ -213,23 +215,23 @@
 }
 
 .orden-card__estado--pendiente {
-  background: #fff3cd;
-  color: #856404;
+  background: var(--crema_oscuro);
+  color: var(--mostaza);
 }
 
 .orden-card__estado--confirmada {
-  background: #cce5ff;
-  color: #004085;
+  background: var(--gris_claro);
+  color:var(--azul);
 }
 
 .orden-card__estado--completada {
-  background: #d4edda;
+  background: var(--verde);
   color: #155724;
 }
 
 .orden-card__estado--cancelada {
-  background: #f8d7da;
-  color: #721c24;
+  background: var(--rosa-pastel);
+  color: var(--rojo-vino);
 }
 
 .orden-card__acciones {
@@ -245,31 +247,43 @@
   cursor: pointer;
   font-weight: bold;
 }
+.orden-card__btn--ver-factura{
+  background-color: var(--rosa-pastel-oscuro);
+  color: var(--blanco);
+}
+.orden-card__btn--completar{
+  background-color: var(--rosa-pastel-oscuro);
+  color: var(--blanco);
+}
+.orden-card__btn--eliminar{
+  background-color: var(--rojo-vino);
+  color: var(--blanco);
+}
 
 .orden-card__btn--pagar {
-  background: #28a745;
-  color: #fff;
+  background:var(--verde);
+  color: var(--blanco);
 }
 
 .orden-card__btn--cancelar {
-  background: #dc3545;
-  color: #fff;
+  background: var(--rojo-vino);
+  color: var(--blanco);
 }
 
 .orden-card__btn--productos {
-  background: #007bff;
-  color: #fff;
+  background: var(--azul);
+  color: var(--blanco);
 }
 
 .orden-card__productos {
   margin-top: 0.5rem;
   padding: 0.5rem;
-  background: #f9f9f9;
+  background: var(--blanco);
   border-radius: 8px;
 }
 
 .orden-card__productos-empty {
-  color: #666;
+  color: var(--gris);
   font-style: italic;
 }
 

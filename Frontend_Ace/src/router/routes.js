@@ -8,7 +8,8 @@ import { productosController } from "../controllers/productosController.js";
 import { productosClienteController } from "../controllers/productosClienteController.js";
 import { ordenesTrabajadorController } from "../controllers/clientesController.js";
 import { reservasController } from "../controllers/reservasContoller.js";
-// import { FacturaController } from "../controllers/facturaController.js";
+import { movimientosController } from "../controllers/movimientosController.js";
+ import { facturasPorDiaController } from "../controllers/facturasfechaController.js";
 
 
 
@@ -27,23 +28,27 @@ export const routers = {
   cliente: {
     path: "clientes/agendar-estilistas/index.html",
     controller:estilistasController,
-    private: false
+    private: true,
+    permission:"Orden.create"
   },
 
   agendar: {
     path: "clientes/agendar/index.html", // tu nueva vista
     controller:agendarController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"Orden.index"
   },
   agendarProductos: {
     path: "clientes/agendar/productos-cards.html", // tu nueva vista
     controller:productosClienteController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"Orden.create"
   },
   verCitas:{
     path: "clientes/reservas/index.html",
     controller: reservasController,
-    private: false
+    private: true,
+    permission: "Orden.update"
   },
   //  verFacturas:{
   //   path: "clientes/facturas/index.html",
@@ -53,40 +58,47 @@ export const routers = {
   adminTrabajadores: {
     path: "admin/gestionTrabajadores/trabajadores-form.html", // tu nueva vista
     controller:trabajadorController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"usuarios.create"
   },
 
   tablaTrabajadores: {
     path: "admin/gestionTrabajadores/trabajadores-tabla.html", // tu nueva vista
     controller:trabajadorController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"usuarios.delete"
   },
 
   productos: {
     path: "admin/gestionProductos/productos-form.html", // tu nueva vista
     controller:productosController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"productos.create"
   },
 
   tablaProductos: {
     path: "admin/gestionProductos/productos-tabla.html", // tu nueva vista
     controller:productosController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"productos.update"
   },
   movimientosTrabajador: {
     path: "admin/movimientos/index.html", // tu nueva vista
-    controller:productosController, // controlador de esa vista
-    private: false
+    controller:movimientosController, // controlador de esa vista
+    private: true,
+    permission:"movimientostrabajador.index"
   },
   visualizarFacturas: {
     path: "admin/facturas/index.html", // tu nueva vista
-    controller:productosController, // controlador de esa vista
-    private: false
+    controller:facturasPorDiaController, // controlador de esa vista
+    private: true,
+    permission:"facturas.index"
   },
   visualizarCitasTrabajador: {
     path: "trabajadores/index.html", // tu nueva vista
     controller:ordenesTrabajadorController, // controlador de esa vista
-    private: false
+    private: true,
+    permission:"Orden.index"
   },
   
 }
