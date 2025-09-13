@@ -64,7 +64,7 @@ export const ordenesTrabajadorController = async () => {
             Completar
           </button>
         `;
-      } else if (estado === "completada" || estado === "cancelada") {
+      } else if (estado === "cancelada") {
         accionesHTML = `
           <button class="orden-card__btn orden-card__btn--eliminar" data-id="${orden.id}">
             Eliminar

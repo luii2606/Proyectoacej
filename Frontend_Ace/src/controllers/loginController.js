@@ -38,28 +38,29 @@ export function loginController() {
           localStorage.setItem("access_token", response.access_token);
           // localStorage.setItem("", response.access_token);
           localStorage.setItem("refresh_token", response.refresh_token);
-          localStorage.setItem("id_tipo_usuario", response.id_tipo_usuario);
+          localStorage.setItem("id_roles", response.id_roles);
 
 
-          console.log("Tipo de usuario:", response.id_tipo_usuario);
+          console.log("roles:", response.id_roles);
 
           // 🔹 Guardar también al usuario en sessionStorage
           const usuario = {
             id: response.id,
             nombre: response.nombre,
             correo: response.correo,
-            id_roles: response.id_roles,
-            id_tipo_usuario: response.id_tipo_usuario
+            id_tipo_usuario: response.id_tipo_usuario,
+            id_roles: response.id_roles
+            
           };
           
           
           
           sessionStorage.setItem("usuarioLogueado", JSON.stringify(usuario));
 
-          const tipo_usuario = Number(response.id_tipo_usuario);
+          const roles = Number(response.id_roles);
 
           // Redirección según tipo_usuario
-          switch (tipo_usuario) {
+          switch (roles) {
             case 1: // Admin
               window.location.href = '#/adminTrabajadores';
               break;

@@ -139,21 +139,8 @@ export const reservasController = async () => {
           await put(`ordenes/${idOrden}/pagar`);
           success("✅ Orden pagada con éxito");
 
-          const card = btn.closest(".orden-card");
-          const estadoSpan = card.querySelector(".orden-card__estado");
-          estadoSpan.textContent = "Confirmada";
-          estadoSpan.className =
-            "orden-card__estado orden-card__estado--confirmada";
-
-          const accionesDiv = card.querySelector(".orden-card__acciones");
-          accionesDiv.innerHTML = `
-            <button class="orden-card__btn orden-card__btn--ver-factura" data-id="${idOrden}">
-              Ver Factura
-            </button>
-            <button class="orden-card__btn orden-card__btn--productos" data-id="${idOrden}">
-              Ver productos
-            </button>
-          `;
+          // 🔄 Refrescar órdenes desde el backend
+          reservasController();
         } catch (err) {
           error("❌ Error al pagar la orden");
         }
@@ -165,21 +152,8 @@ export const reservasController = async () => {
           await put(`ordenes/${idOrden}/cancelar`);
           success("⚠️ Orden cancelada");
 
-          const card = btn.closest(".orden-card");
-          const estadoSpan = card.querySelector(".orden-card__estado");
-          estadoSpan.textContent = "Cancelada";
-          estadoSpan.className =
-            "orden-card__estado orden-card__estado--cancelada";
-
-          const accionesDiv = card.querySelector(".orden-card__acciones");
-          accionesDiv.innerHTML = `
-            <button class="orden-card__btn orden-card__btn--eliminar" data-id="${idOrden}">
-              Eliminar
-            </button>
-            <button class="orden-card__btn orden-card__btn--productos" data-id="${idOrden}">
-              Ver productos
-            </button>
-          `;
+          // 🔄 Refrescar órdenes desde el backend
+          reservasController();
         } catch (err) {
           error("❌ Error al cancelar la orden");
         }
@@ -189,7 +163,7 @@ export const reservasController = async () => {
       if (btn.classList.contains("orden-card__btn--eliminar")) {
         try {
           await delet(`ordenes/${idOrden}`);
-          success("🗑️ Orden eliminada del historial y de la base de datos");
+          success(" Orden eliminada del historial y de la base de datos");
 
           const card = btn.closest(".orden-card");
           card.remove();
@@ -275,6 +249,3 @@ export const reservasController = async () => {
     contenedor.innerHTML = "<p>Error al cargar las órdenes.</p>";
   }
 };
-
-
-

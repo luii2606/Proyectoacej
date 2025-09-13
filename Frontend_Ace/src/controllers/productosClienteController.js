@@ -128,7 +128,7 @@ export const productosClienteController = async () => {
           "productosSeleccionados",
           JSON.stringify(seleccionados)
         );
-        // window.location.hash = "#/orden-completada";
+        window.location.hash = "#/verCitas";
       } catch (err) {
         console.error("Error guardando detalle:", err);
         error("No se pudieron guardar los productos en la orden");
@@ -138,7 +138,7 @@ export const productosClienteController = async () => {
     // ❌ Botón: no gracias
     btnNo.addEventListener("click", () => {
       localStorage.removeItem("productosSeleccionados");
-      // window.location.hash = "#/orden-completada";
+      window.location.hash = "#/verCitas";
     });
   } catch (err) {
     console.error("Error cargando productos:", err);

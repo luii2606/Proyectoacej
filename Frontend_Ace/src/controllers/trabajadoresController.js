@@ -67,20 +67,21 @@ export const trabajadorController = async () => {
       tablaBody.innerHTML = "";
 
       trabajadores
-        .filter((t) => t.id_tipo_usuario === 3) // solo trabajadores
+        .filter((t) => t.id_roles === 3) // solo trabajadores
         .forEach((t) => {
           const tr = document.createElement("tr");
 
-          const nombreUsuario = t.usuario || t.nombre || "";
-          const nombreRol = t.nombreRol || t.nombre_rol || t.rol || "";
+        const nombreUsuario = t.usuario || t.nombre || "";
+
           const nombreEstado = t.estado || t.nombreEstado || "";
+          
 
           tr.innerHTML = `
             <td class="admin__tabla-cuerpo">${t.id}</td>
             <td class="admin__tabla-cuerpo">${nombreUsuario}</td>
             <td class="admin__tabla-cuerpo">${t.correo || ""}</td>
             <td class="admin__tabla-cuerpo">${t.telefono || ""}</td>
-            <td class="admin__tabla-cuerpo">${nombreRol}</td>
+            <td class="admin__tabla-cuerpo">${t.nombre_tipo_usuario}</td>
             <td class="admin__tabla-cuerpo">${nombreEstado}</td>
             <td class="admin__tabla-cuerpo">
               <button data-id="${t.id}" class="tabla__boton tabla__boton--eliminar">Eliminar</button>
@@ -128,8 +129,8 @@ export const trabajadorController = async () => {
   correo: correo.value.trim(),
   telefono: telefono.value.trim(),
   contrasena: contrasena.value,
-  id_tipo_usuario: 3, // trabajador fijo
-  id_roles: rolSelect?.value || null,
+  id_roles: 3, // trabajador fijo
+  id_tipo_usuario: rolSelect?.value || null,
   id_estado_usuarios: estadoSelect && estadoSelect.value !== "" ? parseInt(estadoSelect.value) : null
 };
 
@@ -151,7 +152,7 @@ export const trabajadorController = async () => {
         await cargarTrabajadores();
       } catch (err) {
         console.error(err);
-        error("Ocurrió un error al guardar el trabajador.");
+        error("Ocurrió un error asegurate de diligenciar los campos.");
       } finally {
         btnGuardar.disabled = false;
         btnGuardar.textContent = "Registrar Trabajador";

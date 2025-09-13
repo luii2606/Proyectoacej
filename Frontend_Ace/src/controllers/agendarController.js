@@ -24,7 +24,7 @@ export const agendarController = async () => {
   // --- Servicios ---
   const selectServicio = document.querySelector("#select-servicio");
   try {
-    const servicios = await solicitudes.get(`servicios/rol/${trabajador.id_roles}`);
+    const servicios = await solicitudes.get(`servicios/rol/${trabajador.id_tipo_usuario}`);
     selectServicio.innerHTML = `<option value="">Selecciona un servicio...</option>`;
     servicios.forEach(s => {
       const option = document.createElement("option");

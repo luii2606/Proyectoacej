@@ -6,12 +6,12 @@ import { renderHeaderTrabajador } from "../componentes/trabajador/header.js";
 import { logout } from "../helpers/auth.js"; // ajusta la ruta a donde tengas tu logout
 
 export function headerController(container) {
-  const idTipoUsuario = localStorage.getItem("id_tipo_usuario");
+  const idRol = localStorage.getItem("id_roles");
 
   // Limpia el header antes de renderizar
   container.innerHTML = "";
 
-  switch (idTipoUsuario) {
+  switch (idRol) {
     case "2": // cliente
       renderHeader(container);
       attachLogout(container);

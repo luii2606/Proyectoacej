@@ -21,7 +21,7 @@ export const estilistasController = async () => {
         tarjeta.className = "estilista estilista--hover";
 
         const nombreUsuario = t.nombre || "";
-        const nombreRol = t.nombreRol || "";
+        const nombreRol = t.nombre_tipo_usuario || "";
         const telefono = t.telefono || "";
 
         tarjeta.innerHTML = `
@@ -42,7 +42,7 @@ export const estilistasController = async () => {
             const trabajadorSeleccionado = {
               id: trabajadorDetalle.id,           // id_usuario real
               nombre: trabajadorDetalle.nombre,   // nombre del trabajador
-              id_roles: trabajadorDetalle.id_roles // id_roles para cargar servicios
+              id_tipo_usuario: trabajadorDetalle.id_tipo_usuario // id_roles para cargar servicios
             };
 
             sessionStorage.setItem("trabajadorSeleccionado", JSON.stringify(trabajadorSeleccionado));

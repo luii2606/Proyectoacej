@@ -49,7 +49,6 @@ export const facturasPorDiaController = async () => {
           h = h % 12 || 12; // convierte 0 en 12
           hora12 = `${h}:${minutos} ${ampm}`;
         }
-
         const fila = `
           <tr class="admin__tabla-fila">
             <td>${f.idFactura || "-"}</td>
