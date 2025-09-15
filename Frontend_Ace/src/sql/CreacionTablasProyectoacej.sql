@@ -1,4 +1,4 @@
-USE proyectoacej2;
+use proyectoacej;
 
 DROP TABLE IF EXISTS permisos;
 CREATE TABLE permisos( 
@@ -6,6 +6,8 @@ CREATE TABLE permisos(
     nombre VARCHAR(100),
     descripcion VARCHAR(200)
 ); 
+ SET foreign_key_checks = 0;
+  SET foreign_key_checks = 1;	
 
 -- Tabla de roles (antes era tipo_usuario)
 
@@ -90,8 +92,8 @@ CREATE TABLE Estado_usuarios(
     nombre VARCHAR(100)
 ); 
 
-DROP TABLE IF EXISTS permisos_tipo_usuario; 
-CREATE TABLE permisos_tipo_usuario ( 
+DROP TABLE IF EXISTS permisos_rol; 
+CREATE TABLE permisos_tipo_rol ( 
     id INT PRIMARY KEY AUTO_INCREMENT, 
     id_permisos INT, 
     id_roles INT,

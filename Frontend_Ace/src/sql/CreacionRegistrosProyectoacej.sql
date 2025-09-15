@@ -1,4 +1,5 @@
 -- inserts
+use proyectoacej;
 INSERT INTO permisos (nombre, descripcion) VALUES
 ('usuarios.index', 'Listar todos los usuarios'),
 ('usuarios.create', 'Crear usuarios'),
@@ -12,12 +13,12 @@ INSERT INTO permisos (nombre, descripcion) VALUES
 ('Orden.index', 'Listar todas las ordenes'),
 ('Orden.create', 'crear una orden'),
 ('Orden.update', 'Editar estado de las ordenes');
-
+select * from permisos;
 INSERT INTO roles (nombre) VALUES
 ('Administrador'),
 ('Cliente'),
 ('Trabajador');
-insert into permisos_tipo_usuario (id_permisos,id_roles) values 
+insert into permisos_tipo_rol(id_permisos,id_roles) values 
   (1,1),
   (2,1),
   (3,1),
@@ -32,6 +33,9 @@ insert into permisos_tipo_usuario (id_permisos,id_roles) values
   (11,2),
   (12,2),
   (12,3);
+
+  select * from roles;
+  select* from permisos_tipo_rol;
   
 INSERT INTO tipo_usuario ( nombre) VALUES
 ('Estilista'),
@@ -93,4 +97,3 @@ INSERT INTO Estado_producto (nombre) VALUES
 -- detalle_orden_producto
 
 -- factura
-
