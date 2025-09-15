@@ -34,17 +34,38 @@ export const get = async (endpoint) => {
  * @param {object} datos - Datos a enviar en el body
  */
 export const post = async (endpoint, datos = {}) => {
-  const res = await fetch(`${url}/${endpoint}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      ...getAuthHeaders(),
-    },
-    body: JSON.stringify(datos),
-  });
+   try {
+    const res = await fetch(`${url}/${endpoint}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...getAuthHeaders(),
+      },
+      body: JSON.stringify(datos),
+    });
 
-  if (!res.ok) throw new Error(`Error POST ${endpoint}: ${res.status}`);
-  return await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch {
+      data = null; // por si el backend devuelve texto plano
+    }
+
+    // 🔑 En lugar de lanzar error, devolvemos el objeto con estado y mensaje
+    return {
+      ok: res.ok,
+      status: res.status,
+      ...data,
+    };
+
+  } catch (error) {
+    console.error("❌ Error en POST:", error);
+    return {
+      ok: false,
+      status: 500,
+      error: "No se pudo conectar con el servidor",
+    };
+  }
 };
 
 /**

@@ -66,23 +66,41 @@ export const registroController = async (parametros = null) => {
       console.log("📥 Respuesta del backend:", respuesta);
 
       if (!respuesta) {
-        error("No se recibió respuesta del servidor.");
-        return;
-      }
-
-      if (respuesta.error) {
-        error(respuesta.error || "Error al registrar usuario");
-        return;
-      }
-
-      await success(respuesta.message || "Usuario creado con éxito");
-      location.hash = "#/login";
-
-    } catch (err) {
-      console.error("❌ Error en registro:", err);
-      error("Ocurrió un error al registrar. Ingresa los datos requeridos.");
-    } finally {
-      if (btn) { btn.disabled = false; btn.textContent = "Registrarse"; }
+      await Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "No se recibió respuesta del servidor.",
+      });
+      return;
     }
-  });
+
+       if (respuesta.error) {
+      await Swal.fire({
+        icon: "error",
+        title: "Registro fallido",
+        text: respuesta.error, // <- Aquí se mostrará "El correo ya está registrado"
+        confirmButtonText: "Entendido"
+      });
+      return;
+    }
+
+        await Swal.fire({
+      icon: "success",
+      title: "¡Listo!",
+      text: respuesta.message || "Usuario creado con éxito",
+      confirmButtonText: "Ir a login"
+        });
+       location.hash = "#/login";
+
+    }catch (err) {
+    console.error("❌ Error en registro:", err);
+    await Swal.fire({
+      icon: "error",
+      title: "Error inesperado",
+      text: "Ocurrió un error al registrar. Revisa la consola.",
+    });
+  } finally {
+    if (btn) { btn.disabled = false; btn.textContent = "Registrarse"; }
+  }
+});
 };

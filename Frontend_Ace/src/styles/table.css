@@ -251,3 +251,81 @@ align-items:flex-start;
   color: var(--crema-claro);
 
 }
+/* ================== Responsive: Citas del día ================== */
+@media (max-width: 414px) and (max-height: 896px) {
+  .admin__citas {
+    margin: 15rem 1rem;  
+    padding: 1.5rem;  
+    max-width: 100%; 
+    justify-content: center; 
+  }
+
+  .admin__titulo {
+    font-size: 1.3rem;   
+    margin-bottom: 1rem;
+  }
+
+  .admin__content-items {
+    flex-direction: column; 
+    gap: 10px;
+    align-items: stretch;  
+  }
+
+  .admin__input,
+  .admin__select,
+  .admin__boton--citas {
+    width: 100%;      
+    font-size: 0.95rem;
+    padding: 0.7rem;
+  }
+
+  .tabla-citas {
+    font-size: 0.8rem; 
+  }
+
+  .tabla-citas th,
+  .tabla-citas td {
+    padding: 0.4rem;
+    text-align: center;
+  }
+  .admin__facturas {
+    margin: 13px ;       /* menos margen lateral */
+    padding: 15px;
+    border-radius: 12px;
+  }
+
+  /* .admin__titulo {
+    font-size: 1.2rem;  
+    text-align: center;
+    margin-bottom: 15px;
+  } */
+
+  /* Inputs y botones en columna */
+  .admin__input {
+    width: 100%;
+    margin: 0 0 10px 0;      /* debajo del input va el botón */
+    font-size: 0.9rem;
+  }
+
+  .admin__boton,
+  .admin__boton--citas {
+    width: 100%;             /* ocupan todo el ancho */
+    height: 40px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+
+  /* Ajuste de tabla si la hay */
+  .admin__tabla {
+    font-size: 0.8rem;
+    display: block;
+    overflow-x: auto;        /* scroll horizontal si es necesario */
+    white-space: nowrap;
+  }
+
+  .admin__tabla th,
+  .admin__tabla td {
+    padding: 6px 8px;
+  }
+}
+

@@ -74,8 +74,6 @@ export const trabajadorController = async () => {
         const nombreUsuario = t.usuario || t.nombre || "";
 
           const nombreEstado = t.estado || t.nombreEstado || "";
-          
-
           tr.innerHTML = `
             <td class="admin__tabla-cuerpo">${t.id}</td>
             <td class="admin__tabla-cuerpo">${nombreUsuario}</td>
@@ -122,18 +120,53 @@ export const trabajadorController = async () => {
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
-      if (!validaciones.validarCampos(e)) return;
+       // Validación manual de campos vacíos
+      if (
+        !nombre.value.trim() ||
+        !correo.value.trim() ||
+        !telefono.value.trim() ||
+        !contrasena.value.trim() ||
+        !rolSelect.value ||
+        !estadoSelect.value
+      ) {
+        error("Por favor complete todos los campos antes de registrar el trabajador.");
+        return;
+          }
+            // Nombre mínimo 5 caracteres
+      if (nombre.value.trim().length < 5) {
+        error("El nombre debe tener al menos 5 caracteres.");
+        return;
+      }
 
-  const datos = {
-  nombre: nombre.value.trim(),
-  correo: correo.value.trim(),
-  telefono: telefono.value.trim(),
-  contrasena: contrasena.value,
-  id_roles: 3, // trabajador fijo
-  id_tipo_usuario: rolSelect?.value || null,
-  id_estado_usuarios: estadoSelect && estadoSelect.value !== "" ? parseInt(estadoSelect.value) : null
-};
+      // Correo válido con @gmail.com
+      const regexCorreo = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+      if (!regexCorreo.test(correo.value.trim())) {
+        error("El correo debe ser válido ");
+        return;
+      }
 
+      // Teléfono con 9 dígitos
+      const regexTelefono = /^[0-9]{9}$/;
+      if (!regexTelefono.test(telefono.value.trim())) {
+        error("El teléfono debe tener exactamente 9 números.");
+        return;
+      }
+
+      // Contraseña fuerte: minúscula, mayúscula, número, carácter especial, mínimo 8
+      const regexContrasena = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+      if (!regexContrasena.test(contrasena.value)) {
+        error("La contraseña debe tener al menos 8 caracteres, incluir una mayúscula, una minúscula, un número y un carácter especial.");
+        return;
+      }
+    const datos = {
+    nombre: nombre.value.trim(),
+    correo: correo.value.trim(),
+    telefono: telefono.value.trim(),
+    contrasena: contrasena.value,
+    id_roles: 3, // trabajador fijo
+    id_tipo_usuario: rolSelect?.value || null,
+    id_estado_usuarios: estadoSelect && estadoSelect.value !== "" ? parseInt(estadoSelect.value) : null
+  };
 
       try {
         btnGuardar.disabled = true;
@@ -144,6 +177,7 @@ export const trabajadorController = async () => {
           await success(resp.mensaje || "Trabajador actualizado");
         } else {
           const resp = await solicitudes.post("auth/register-trabajador", datos);
+           window.location.hash = "#/tablaTrabajadores";
           await success(resp.mensaje || "Trabajador registrado");
         }
 

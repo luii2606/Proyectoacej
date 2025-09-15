@@ -292,6 +292,50 @@
 .orden-card__producto {
   margin: 0.25rem 0;
 }
+/* 📱 Responsivo para pantallas pequeñas (ej: 414x896) */
+@media (max-width: 414px) and (max-height: 896px) {
+
+  /* Bloque principal */
+  .estilistas__bloque {
+    margin: 40px 10px;   /* menos margen para que no quede tanto espacio en blanco */
+    padding: 0.5rem 1rem;
+  }
+
+  /* Tarjeta de cada estilista */
+  .estilista {
+    flex-direction: column;  /* cambia a columna */
+    align-items: flex-start;
+    gap: 10px;
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  /* Nombre más grande y centrado */
+  .estilista__nombre {
+    font-size: 1em;   /* un poco más pequeño para que quepa mejor */
+    text-align: left;
+  }
+
+  /* Descripción más compacta */
+  .estilista__descripcion {
+    font-size: 0.9em;
+  }
+
+  /* Teléfono ocupa todo el ancho */
+  .estilista__telefono {
+    font-size: 0.85em;
+    width: 100%;
+    text-align: center;
+    margin-top: 5px;
+  }
+
+  /* Ajuste del bloque de título */
+  .estilista--leter {
+    font-size: 1rem;
+    text-align: center;
+    padding: 10px 0;
+  }
+}
 
 
 

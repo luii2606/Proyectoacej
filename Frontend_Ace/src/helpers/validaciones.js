@@ -114,26 +114,3 @@ export const validarCampos = (event) => {
 
   return valido;
 };
-
-//  EVENTOS 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("form");
-
-  // Eventos de restricciones en tiempo real
-  document.getElementById("nombre").addEventListener("keypress", validarTexto);
-  document.getElementById("telefono").addEventListener("keypress", validarNumero);
-  document.getElementById("telefono").addEventListener("keypress", (e) => {
-    if (e.target.value.length >= 10 && !teclasEspeciales.includes(e.key)) e.preventDefault();
-  });
-
-  // Validación al enviar
-  form.addEventListener("submit", (e) => {
-    e.preventDefault();
-    if (validarCampos(e)) {
-      console.log("Formulario válido", datos);
-      form.submit();
-    } else {
-      console.log("Formulario inválido");
-    }
-  });
-});

@@ -223,5 +223,16 @@ font-weight: bold;
   .login__container{
     margin-top: 55px;
   }
-  
+  .admin__main{
+    width: 150vw;
+  }
+  .admin__section--trabajadores {
+    width: 200vw;
+    margin: 20vw;
+    justify-content: center; 
+  }
+  .form__label{
+    font-size: 1.2rem;
+  }
+ 
 }

@@ -43,40 +43,37 @@ export const productosController = async () => {
     // Poblar el select (usa cache si ya se cargó)
 
     form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-  if (!validaciones.validarCampos(e)) return;
+      e.preventDefault();
+      if (!validaciones.validarCampos(e)) return;
 
-  const idInput = form.querySelector("#id-producto");
+      const idInput = form.querySelector("#id-producto");
 
-  const nombreVal = (nombre?.value || "").trim();
-  const descripcionVal = (descripcion?.value || "").trim();
-  const precioVal = (precio?.value || "").trim();
-  const cantidadVal = (cantidad?.value || "").trim();
+      const nombreVal = (nombre?.value || "").trim();
+      const descripcionVal = (descripcion?.value || "").trim();
+      const precioVal = (precio?.value || "").trim();
+      const cantidadVal = (cantidad?.value || "").trim();
 
-  // 🔹 Validación manual extra
-  if (!nombreVal || !descripcionVal || !precioVal || !cantidadVal) {
-    error("Todos los campos son obligatorios.");
-    return;
-  }
-  if (isNaN(precioVal) || parseFloat(precioVal) <= 0) {
-    error("El precio debe ser un número mayor a 0.");
-    return;
-  }
-  if (isNaN(cantidadVal) || parseInt(cantidadVal) < 0) {
-    error("La cantidad debe ser un número válido.");
-    return;
-  }
+      // 🔹 Validación manual extra
+      if (!nombreVal || !descripcionVal || !precioVal || !cantidadVal) {
+        error("Todos los campos son obligatorios.");
+        return;
+      }
+      if (isNaN(precioVal) || parseFloat(precioVal) <= 0) {
+        error("El precio debe ser un número mayor a 0.");
+        return;
+      }
+      if (isNaN(cantidadVal) || parseInt(cantidadVal) < 0) {
+        error("La cantidad debe ser un número válido.");
+        return;
+      }
 
-  const datos = {
-    nombreProducto: nombreVal,
-    descripcion: descripcionVal,
-    precio: parseFloat(precioVal),
-    cantidad: parseInt(cantidadVal),
-    idEstadoProducto: 1,
-  };
-      
-      
-
+      const datos = {
+        nombreProducto: nombreVal,
+        descripcion: descripcionVal,
+        precio: parseFloat(precioVal),
+        cantidad: parseInt(cantidadVal),
+        idEstadoProducto: 1,
+      };
       try {
         if (btnGuardar) {
           btnGuardar.disabled = true;
